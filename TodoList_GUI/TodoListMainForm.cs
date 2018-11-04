@@ -121,7 +121,7 @@ namespace TodoList_GUI
         /// gets the task to do tht is currently selected (null if nothing is selected)
         /// </summary>
         /// <returns></returns>
-        private TaskToDo CurrentSelectedTask()
+        private TaskToDo GetCurrentSelectedTask()
         {
             TaskToDo result = null;
             if(listViewAllTasks.SelectedItems.Count == 1)
@@ -146,7 +146,7 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            TaskToDo taskToDelete = CurrentSelectedTask();
+            TaskToDo taskToDelete = GetCurrentSelectedTask();
             if(taskToDelete != null)
             {
                 _allTasks.RemoveTask(taskToDelete);
