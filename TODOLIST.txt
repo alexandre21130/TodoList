@@ -1,0 +1,7 @@
+- Ouvrir une task dans un nouvel onglet
+- formatter une task avec un arbre
+- possibilité de modifier le nom d'une task
+- sauvegarder les listes dans un fichier XML
+- restaurer les listes depuis l'XML
+- ajouter des raccourcis clavier (sur la liste principale pour supprimer / renommer)
+- ajouter un menu contextuel sur la liste principale (memes fonctions que les raccourcis clavier)
