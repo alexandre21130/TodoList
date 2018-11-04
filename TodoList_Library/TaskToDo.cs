@@ -17,6 +17,7 @@ namespace TodoList_Library
         private String _name;
         private List<TaskToDo> _subtasks;
         private String _description;
+        private Boolean _completed;
         #endregion PRIVATE_FIELDS
 
         /// <summary>
@@ -28,6 +29,7 @@ namespace TodoList_Library
             _name = name;
             _subtasks = new List<TaskToDo>();
             _description = description;
+            _completed = false;
         }        
 
         /// <summary>
@@ -46,6 +48,89 @@ namespace TodoList_Library
         {
             get { return _description; }
             set { _description = value; }
+        }
+
+        /// <summary>
+        /// set the current task as completed
+        /// Can update the completed status of its child and its parents if requested
+        /// </summary>
+        private void SetCompletedStatus(Boolean isCompleted, Boolean updateParents, Boolean updateChild)
+        {
+            _completed = isCompleted; //set the task as completed or not
+            //set all subtasks as completed or not if requested
+            if (updateChild)
+            {
+                foreach (TaskToDo subtask in _subtasks)
+                {
+                    subtask.SetCompletedStatus(isCompleted, false, true); //descending recursivity to change the status of all child and child of child ...
+                }
+            }
+            //refresh parents status if requested (ascending recursivity)
+            if(updateParents)
+            {
+                if (_parentTask != null) //only if we have a parent
+                    _parentTask.RefreshCompletedStatus(true);
+            }
+        }
+
+        /// <summary>
+        /// Set the current task as completed
+        /// Report the completed status in all its subtasks and refresh the parent status
+        /// </summary>
+        public void SetCompleted()
+        {
+            SetCompletedStatus(true, true, true);
+        }
+
+        /// <summary>
+        /// Set the current task as not completed
+        /// Report this status in all its subtasks and refresh the parent status
+        /// </summary>
+        public void SetNotCompleted()
+        {
+            SetCompletedStatus(false, true, true);
+        }
+
+        /// <summary>
+        /// Update the completed status of a task regarding its substasks (do nothing if there is no child)
+        /// Can update recursively its parents too
+        /// </summary>
+        private void RefreshCompletedStatus(Boolean updateParents)
+        {
+            //refresh completed status of current task if there are child, do nothing if there is no child
+            if(_subtasks.Count > 0)
+            {
+                _completed = AllSubtasksAreCompleted();
+            }
+            //update the parent and its parents ... if requested
+            if (updateParents && _parentTask != null)
+                _parentTask.RefreshCompletedStatus(true);
+        }
+
+        /// <summary>
+        /// returns true if all subtasks are completed, else returns false
+        /// if there is no subtasks, returns true
+        /// </summary>
+        private Boolean AllSubtasksAreCompleted()
+        {
+            if (IsTerminalTask)
+                return true;
+            else
+                return _subtasks.Find(x => !x.IsCompleted) == null; //all subtasks are completed if we cannot find any subtask that is not completed
+        }
+
+        
+
+
+        /// <summary>
+        /// returns true if a task is completed, else returns false
+        /// </summary>
+        public Boolean IsCompleted
+        {
+            get
+            {
+                return _completed;
+            }
         }
 
         /// <summary>
@@ -82,6 +167,7 @@ namespace TodoList_Library
         {
             newSubtask._parentTask = this; //create the uplink between this and the child
             _subtasks.Add(newSubtask);
+            RefreshCompletedStatus(true); //refresh the completed status of current task and all its parents
             return newSubtask;
         }
 
@@ -92,9 +178,13 @@ namespace TodoList_Library
         public void RemoveSubtask(TaskToDo subtaskToRemove)
         {
             if (_subtasks.Contains(subtaskToRemove))
+            {
                 _subtasks.Remove(subtaskToRemove);
+                RefreshCompletedStatus(true); //refresh the completed status of current task and all its parents
+            }
         }
 
 
-    }
-}
+    } //end of the class
+
+} //end of the namespace
