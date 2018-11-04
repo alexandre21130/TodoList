@@ -82,11 +82,15 @@
             this.listViewAllTasks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewAllTasks.GridLines = true;
             this.listViewAllTasks.Location = new System.Drawing.Point(6, 6);
+            this.listViewAllTasks.MultiSelect = false;
             this.listViewAllTasks.Name = "listViewAllTasks";
             this.listViewAllTasks.Size = new System.Drawing.Size(632, 287);
             this.listViewAllTasks.TabIndex = 0;
             this.listViewAllTasks.UseCompatibleStateImageBehavior = false;
+            this.listViewAllTasks.View = System.Windows.Forms.View.List;
+            this.listViewAllTasks.SelectedIndexChanged += new System.EventHandler(this.listViewAllTasks_SelectedIndexChanged);
             // 
             // btnNewTask
             // 
@@ -97,6 +101,7 @@
             this.btnNewTask.TabIndex = 1;
             this.btnNewTask.Text = "New";
             this.btnNewTask.UseVisualStyleBackColor = true;
+            this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
             // 
             // btnDelete
             // 
@@ -107,6 +112,7 @@
             this.btnDelete.TabIndex = 1;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnOpenSelectedTask
             // 
@@ -128,6 +134,7 @@
             this.Controls.Add(this.tabs);
             this.Name = "TodoListMainForm";
             this.Text = "TodoList";
+            this.Load += new System.EventHandler(this.TodoListMainForm_Load);
             this.tabs.ResumeLayout(false);
             this.tabAllTasks.ResumeLayout(false);
             this.ResumeLayout(false);

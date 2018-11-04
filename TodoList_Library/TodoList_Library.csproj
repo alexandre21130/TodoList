@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TaskCollection.cs" />
+    <Compile Include="TaskFactory.cs" />
     <Compile Include="TaskToDo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
