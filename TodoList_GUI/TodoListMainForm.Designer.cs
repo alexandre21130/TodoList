@@ -30,11 +30,11 @@
         {
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabAllTasks = new System.Windows.Forms.TabPage();
-            this.btnCloseApp = new System.Windows.Forms.Button();
-            this.listViewAllTasks = new System.Windows.Forms.ListView();
-            this.btnNewTask = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.btnOpenSelectedTask = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnNewTask = new System.Windows.Forms.Button();
+            this.listViewAllTasks = new System.Windows.Forms.ListView();
+            this.btnCloseApp = new System.Windows.Forms.Button();
             this.tabs.SuspendLayout();
             this.tabAllTasks.SuspendLayout();
             this.SuspendLayout();
@@ -65,17 +65,38 @@
             this.tabAllTasks.Text = "All tasks";
             this.tabAllTasks.UseVisualStyleBackColor = true;
             // 
-            // btnCloseApp
+            // btnOpenSelectedTask
             // 
-            this.btnCloseApp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCloseApp.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCloseApp.Location = new System.Drawing.Point(660, 343);
-            this.btnCloseApp.Name = "btnCloseApp";
-            this.btnCloseApp.Size = new System.Drawing.Size(140, 29);
-            this.btnCloseApp.TabIndex = 1;
-            this.btnCloseApp.Text = "Quit";
-            this.btnCloseApp.UseVisualStyleBackColor = true;
-            this.btnCloseApp.Click += new System.EventHandler(this.btnCloseApp_Click);
+            this.btnOpenSelectedTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenSelectedTask.Location = new System.Drawing.Point(644, 41);
+            this.btnOpenSelectedTask.Name = "btnOpenSelectedTask";
+            this.btnOpenSelectedTask.Size = new System.Drawing.Size(140, 29);
+            this.btnOpenSelectedTask.TabIndex = 1;
+            this.btnOpenSelectedTask.Text = "View";
+            this.btnOpenSelectedTask.UseVisualStyleBackColor = true;
+            this.btnOpenSelectedTask.Click += new System.EventHandler(this.btnOpenSelectedTask_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDelete.Location = new System.Drawing.Point(647, 119);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(140, 29);
+            this.btnDelete.TabIndex = 1;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnNewTask
+            // 
+            this.btnNewTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNewTask.Location = new System.Drawing.Point(644, 6);
+            this.btnNewTask.Name = "btnNewTask";
+            this.btnNewTask.Size = new System.Drawing.Size(140, 29);
+            this.btnNewTask.TabIndex = 1;
+            this.btnNewTask.Text = "New";
+            this.btnNewTask.UseVisualStyleBackColor = true;
+            this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
             // 
             // listViewAllTasks
             // 
@@ -91,38 +112,19 @@
             this.listViewAllTasks.UseCompatibleStateImageBehavior = false;
             this.listViewAllTasks.View = System.Windows.Forms.View.List;
             this.listViewAllTasks.SelectedIndexChanged += new System.EventHandler(this.listViewAllTasks_SelectedIndexChanged);
+            this.listViewAllTasks.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewAllTasks_MouseDoubleClick);
             // 
-            // btnNewTask
+            // btnCloseApp
             // 
-            this.btnNewTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNewTask.Location = new System.Drawing.Point(644, 6);
-            this.btnNewTask.Name = "btnNewTask";
-            this.btnNewTask.Size = new System.Drawing.Size(140, 29);
-            this.btnNewTask.TabIndex = 1;
-            this.btnNewTask.Text = "New";
-            this.btnNewTask.UseVisualStyleBackColor = true;
-            this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(647, 119);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(140, 29);
-            this.btnDelete.TabIndex = 1;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnOpenSelectedTask
-            // 
-            this.btnOpenSelectedTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenSelectedTask.Location = new System.Drawing.Point(644, 41);
-            this.btnOpenSelectedTask.Name = "btnOpenSelectedTask";
-            this.btnOpenSelectedTask.Size = new System.Drawing.Size(140, 29);
-            this.btnOpenSelectedTask.TabIndex = 1;
-            this.btnOpenSelectedTask.Text = "View";
-            this.btnOpenSelectedTask.UseVisualStyleBackColor = true;
+            this.btnCloseApp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCloseApp.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCloseApp.Location = new System.Drawing.Point(660, 343);
+            this.btnCloseApp.Name = "btnCloseApp";
+            this.btnCloseApp.Size = new System.Drawing.Size(140, 29);
+            this.btnCloseApp.TabIndex = 1;
+            this.btnCloseApp.Text = "Quit";
+            this.btnCloseApp.UseVisualStyleBackColor = true;
+            this.btnCloseApp.Click += new System.EventHandler(this.btnCloseApp_Click);
             // 
             // TodoListMainForm
             // 

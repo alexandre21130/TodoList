@@ -153,5 +153,45 @@ namespace TodoList_GUI
                 RefreshListOfTasks(null);
             }
         }
+
+
+        /// <summary>
+        /// click on the button View selected task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOpenSelectedTask_Click(object sender, EventArgs e)
+        {
+            OpenSelectedTaskInANewTab();  
+        }
+
+
+        /// <summary>
+        /// Open the selected task in a new tab
+        /// </summary>
+        private void OpenSelectedTaskInANewTab()
+        {
+            //get the selected task
+            TaskToDo currentTask = GetCurrentSelectedTask();
+            if (currentTask == null)
+                return;
+            //create a new tab 
+            TabPage newTab = new TabPage(currentTask.Name);
+            //link the tab to the task
+            newTab.Tag = currentTask;
+            tabs.TabPages.Add(newTab);
+            //switch to the new tab
+            tabs.SelectedTab = newTab;
+        }
+
+        /// <summary>
+        /// Double click on an item of the main list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewAllTasks_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            OpenSelectedTaskInANewTab();
+        }
     }
 }
