@@ -52,6 +52,12 @@
     <Compile Include="FormNewTask.Designer.cs">
       <DependentUpon>FormNewTask.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormTaskEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTaskEditor.Designer.cs">
+      <DependentUpon>FormTaskEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="TodoListMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +68,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormNewTask.resx">
       <DependentUpon>FormNewTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTaskEditor.resx">
+      <DependentUpon>FormTaskEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -95,6 +104,9 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>cp "$(SolutionDir)TemplateTask.txt" "$(TargetDir)TemplateTask.txt"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

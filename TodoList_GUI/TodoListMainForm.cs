@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,6 +17,8 @@ namespace TodoList_GUI
     {
 
         private TaskCollection _allTasks;
+        private String _templateTask;
+
 
         /// <summary>
         /// constructor of the main form
@@ -23,6 +27,25 @@ namespace TodoList_GUI
         {
             InitializeComponent();
             _allTasks = new TaskCollection();
+        }
+
+        /// <summary>
+        /// try to load the file that contains a template text used to create a new task
+        /// returns false if the file doesn't exist (an empty string will be used in this case)
+        /// </summary>
+        /// <returns></returns>
+        private Boolean TryLoadTemplateFile()
+        {
+            Boolean fileRead = false;
+            String path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TemplateTask.txt");
+            if (File.Exists(path))
+            {
+                _templateTask = File.ReadAllText(path);
+                fileRead = true;
+            }
+            else
+                _templateTask = String.Empty;
+            return fileRead;
         }
 
 
@@ -66,6 +89,7 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void TodoListMainForm_Load(object sender, EventArgs e)
         {
+            TryLoadTemplateFile();
             RefreshListOfTasks(null);
             RefreshButtonsAccordingSelectedTask();
         }
@@ -77,8 +101,9 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void btnNewTask_Click(object sender, EventArgs e)
         {
-            //open a dialog to create a new task
-            using (FormNewTask frm = new FormNewTask(null))
+
+            //open a dialog to create a new task in edition mode
+            using (FormTaskEditor frm = new FormTaskEditor(_templateTask))
             {
                 //if user completed the creation process, add the new task in list
                 if(frm.ShowDialog() == DialogResult.OK)
@@ -192,6 +217,24 @@ namespace TodoList_GUI
         private void listViewAllTasks_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             OpenSelectedTaskInANewTab();
+        }
+
+
+        /// <summary>
+        /// click on the button Test
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            using (FormTaskEditor dlg = new FormTaskEditor(_templateTask))
+            {
+                if(dlg.ShowDialog()== DialogResult.OK)
+                {
+                    TaskToDo myTask = dlg.Task;
+                    MessageBox.Show(myTask.Name);
+                }
+            }
         }
     }
 }

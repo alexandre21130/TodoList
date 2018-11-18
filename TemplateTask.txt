@@ -1,0 +1,35 @@
+Ci dessous un template de todo list en mode edition
+blabla de début qui ne sert a rien et qui est ignoré puisque aucune tache n'a été definie
+
+# On peut mettre des commentaires qui seront ignorés
+// Ceci est aussi un commentaire
+
+//la premiere tache commence avec un -, l'espace apres le - n'est pas obligatoire, il sera supprimé de toute facon (idem pour les sous taches)
+// on pourrait indenter la tache principale, cette indentation serait juste le niveau 0 en dessous duquel il ne faut pas descendre
+- tache principale
+
+#les lignes de texte qui ne commencent pas par un - et ne sont pas des commentaires sont la description de la tache en cours
+#elle peut etre en multiligne
+#les lignes vides sont ignorées
+
+	Description ligne 1
+	Description ligne 2
+
+
+# les sous taches sont indentées
+# c'est l'indentation qui determine le niveau des sous taches
+# on peut indenter avec des tab et des espaces mais il vaut mieux utiliser toujours la meme methode
+	- tache 1
+		Description de la tache 1 ligne 1
+		Description de la tache 1 ligne 2
+
+		- tache 1.1
+			#les commentaires peuvent etre indentés aussi tant que les premiers caracteres utiles sont # ou //
+			#la description peut etre vide
+
+		- tache 1.2
+
+	- tache 2 [OK]
+	#quand une tache est terminée, il suffit de mettre [OK] dans la tache. On peut le mettre n'importe ou dans le nom de la tache (au debut, au milieu ou a la fin mais apres l'indentation)
+
+	- tache 3

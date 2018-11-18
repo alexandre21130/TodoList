@@ -35,6 +35,7 @@
             this.btnNewTask = new System.Windows.Forms.Button();
             this.listViewAllTasks = new System.Windows.Forms.ListView();
             this.btnCloseApp = new System.Windows.Forms.Button();
+            this.btnTest = new System.Windows.Forms.Button();
             this.tabs.SuspendLayout();
             this.tabAllTasks.SuspendLayout();
             this.SuspendLayout();
@@ -126,12 +127,23 @@
             this.btnCloseApp.UseVisualStyleBackColor = true;
             this.btnCloseApp.Click += new System.EventHandler(this.btnCloseApp_Click);
             // 
+            // btnTest
+            // 
+            this.btnTest.Location = new System.Drawing.Point(504, 343);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(142, 28);
+            this.btnTest.TabIndex = 2;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
             // TodoListMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCloseApp;
             this.ClientSize = new System.Drawing.Size(822, 384);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnCloseApp);
             this.Controls.Add(this.tabs);
             this.Name = "TodoListMainForm";
@@ -152,6 +164,7 @@
         private System.Windows.Forms.Button btnNewTask;
         private System.Windows.Forms.ListView listViewAllTasks;
         private System.Windows.Forms.Button btnOpenSelectedTask;
+        private System.Windows.Forms.Button btnTest;
     }
 }
 
