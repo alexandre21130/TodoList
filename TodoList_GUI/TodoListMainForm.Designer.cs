@@ -46,10 +46,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabs.Controls.Add(this.tabAllTasks);
-            this.tabs.Location = new System.Drawing.Point(12, 12);
+            this.tabs.Location = new System.Drawing.Point(14, 15);
+            this.tabs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(798, 325);
+            this.tabs.Size = new System.Drawing.Size(818, 315);
             this.tabs.TabIndex = 0;
             // 
             // tabAllTasks
@@ -58,10 +59,11 @@
             this.tabAllTasks.Controls.Add(this.btnDelete);
             this.tabAllTasks.Controls.Add(this.btnNewTask);
             this.tabAllTasks.Controls.Add(this.listViewAllTasks);
-            this.tabAllTasks.Location = new System.Drawing.Point(4, 22);
+            this.tabAllTasks.Location = new System.Drawing.Point(4, 25);
+            this.tabAllTasks.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabAllTasks.Name = "tabAllTasks";
-            this.tabAllTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAllTasks.Size = new System.Drawing.Size(790, 299);
+            this.tabAllTasks.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tabAllTasks.Size = new System.Drawing.Size(810, 286);
             this.tabAllTasks.TabIndex = 0;
             this.tabAllTasks.Text = "All tasks";
             this.tabAllTasks.UseVisualStyleBackColor = true;
@@ -69,9 +71,10 @@
             // btnOpenSelectedTask
             // 
             this.btnOpenSelectedTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenSelectedTask.Location = new System.Drawing.Point(644, 41);
+            this.btnOpenSelectedTask.Location = new System.Drawing.Point(638, 50);
+            this.btnOpenSelectedTask.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnOpenSelectedTask.Name = "btnOpenSelectedTask";
-            this.btnOpenSelectedTask.Size = new System.Drawing.Size(140, 29);
+            this.btnOpenSelectedTask.Size = new System.Drawing.Size(163, 36);
             this.btnOpenSelectedTask.TabIndex = 1;
             this.btnOpenSelectedTask.Text = "View";
             this.btnOpenSelectedTask.UseVisualStyleBackColor = true;
@@ -80,9 +83,10 @@
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(647, 119);
+            this.btnDelete.Location = new System.Drawing.Point(642, 146);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(140, 29);
+            this.btnDelete.Size = new System.Drawing.Size(163, 36);
             this.btnDelete.TabIndex = 1;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -91,9 +95,10 @@
             // btnNewTask
             // 
             this.btnNewTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNewTask.Location = new System.Drawing.Point(644, 6);
+            this.btnNewTask.Location = new System.Drawing.Point(638, 7);
+            this.btnNewTask.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnNewTask.Name = "btnNewTask";
-            this.btnNewTask.Size = new System.Drawing.Size(140, 29);
+            this.btnNewTask.Size = new System.Drawing.Size(163, 36);
             this.btnNewTask.TabIndex = 1;
             this.btnNewTask.Text = "New";
             this.btnNewTask.UseVisualStyleBackColor = true;
@@ -104,11 +109,16 @@
             this.listViewAllTasks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewAllTasks.FullRowSelect = true;
             this.listViewAllTasks.GridLines = true;
-            this.listViewAllTasks.Location = new System.Drawing.Point(6, 6);
+            this.listViewAllTasks.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.listViewAllTasks.HideSelection = false;
+            this.listViewAllTasks.LabelWrap = false;
+            this.listViewAllTasks.Location = new System.Drawing.Point(7, 7);
+            this.listViewAllTasks.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listViewAllTasks.MultiSelect = false;
             this.listViewAllTasks.Name = "listViewAllTasks";
-            this.listViewAllTasks.Size = new System.Drawing.Size(632, 287);
+            this.listViewAllTasks.Size = new System.Drawing.Size(624, 264);
             this.listViewAllTasks.TabIndex = 0;
             this.listViewAllTasks.UseCompatibleStateImageBehavior = false;
             this.listViewAllTasks.View = System.Windows.Forms.View.List;
@@ -119,9 +129,10 @@
             // 
             this.btnCloseApp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCloseApp.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCloseApp.Location = new System.Drawing.Point(660, 343);
+            this.btnCloseApp.Location = new System.Drawing.Point(657, 337);
+            this.btnCloseApp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCloseApp.Name = "btnCloseApp";
-            this.btnCloseApp.Size = new System.Drawing.Size(140, 29);
+            this.btnCloseApp.Size = new System.Drawing.Size(163, 36);
             this.btnCloseApp.TabIndex = 1;
             this.btnCloseApp.Text = "Quit";
             this.btnCloseApp.UseVisualStyleBackColor = true;
@@ -129,9 +140,10 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(504, 343);
+            this.btnTest.Location = new System.Drawing.Point(588, 422);
+            this.btnTest.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(142, 28);
+            this.btnTest.Size = new System.Drawing.Size(166, 34);
             this.btnTest.TabIndex = 2;
             this.btnTest.Text = "Test";
             this.btnTest.UseVisualStyleBackColor = true;
@@ -139,13 +151,16 @@
             // 
             // TodoListMainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCloseApp;
-            this.ClientSize = new System.Drawing.Size(822, 384);
+            this.ClientSize = new System.Drawing.Size(846, 388);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnCloseApp);
             this.Controls.Add(this.tabs);
+            this.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "TodoListMainForm";
             this.Text = "TodoList";
             this.Load += new System.EventHandler(this.TodoListMainForm_Load);

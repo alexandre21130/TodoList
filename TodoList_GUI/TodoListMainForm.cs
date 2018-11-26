@@ -181,9 +181,23 @@ namespace TodoList_GUI
             TaskToDo taskToDelete = GetCurrentSelectedTask();
             if(taskToDelete != null)
             {
+                //remove the task from the internal collection
                 _allTasks.RemoveTask(taskToDelete);
-                RefreshListOfTasks(null);
+                //save the modified collection
                 SaveAllTasksToFile();
+                //redraw the main list
+                RefreshListOfTasks(null);
+                //close all tabs that were linked to the deleted task
+                List<TabPage> tabsToClose = new List<TabPage>();
+                for(int i=1; i<tabs.TabCount; i++)
+                {
+                    TabPage currentPage = tabs.TabPages[i];
+                    TaskToDo task = (TaskToDo)currentPage.Tag;
+                    if (task == taskToDelete)
+                        tabsToClose.Add(currentPage);
+                }
+                foreach (TabPage tab in tabsToClose)
+                    tabs.TabPages.Remove(tab);
             }
         }
 
@@ -208,13 +222,62 @@ namespace TodoList_GUI
             TaskToDo currentTask = GetCurrentSelectedTask();
             if (currentTask == null)
                 return;
-            //create a new tab 
+            //create a new tab with its components
             TabPage newTab = new TabPage(currentTask.Name);
+            TreeView treeView = new TreeView();
+            treeView.Name = "treeViewTask";
+            treeView.Dock = DockStyle.Fill;
+            newTab.Controls.Add(treeView);
             //link the tab to the task
             newTab.Tag = currentTask;
             tabs.TabPages.Add(newTab);
+            //Draw the tab content
+            RefreshTab(newTab);
             //switch to the new tab
             tabs.SelectedTab = newTab;
+        }
+
+        /// <summary>
+        /// Refresh the display of a given task tab 
+        /// </summary>
+        /// <param name="tabToRefresh"></param>
+        private void RefreshTab(TabPage tabToRefresh)
+        {
+            //get the treenode associated to the tab
+            TreeView treeView = (TreeView) (tabToRefresh.Controls["treeViewTask"]);
+            //get the task associated to the tab
+            TaskToDo task = (TaskToDo) tabToRefresh.Tag;
+            //Refresh tab title
+            tabToRefresh.Text = task.Name;
+            //draw the task in the treeView
+            DrawTaskInTreeView(treeView, task);
+        }
+
+        /// <summary>
+        /// Draw a task in a given treeView control
+        /// </summary>
+        /// <param name="tv"></param>
+        /// <param name="task"></param>
+        private void DrawTaskInTreeView(TreeView tv, TaskToDo task)
+        {
+            tv.Nodes.Clear();
+            tv.Nodes.Add(task.Name);
+            //TODO : to implement
+
+        }
+
+        /// <summary>
+        /// update the content of the current tab according to its linked task
+        /// </summary>
+        private void RefreshCurrentTaskTab()
+        {
+            //do nothing if selected tab is the main list
+            if (tabs.SelectedIndex == 0)
+                return;
+            //get the current tab
+            TabPage currentTab = tabs.SelectedTab;
+            //Refresh it
+            RefreshTab(currentTab);
         }
 
         /// <summary>
