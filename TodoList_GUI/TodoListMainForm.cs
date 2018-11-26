@@ -18,6 +18,7 @@ namespace TodoList_GUI
 
         private TaskCollection _allTasks;
         private String _templateTask;
+        private String _saveFileName;
 
 
         /// <summary>
@@ -27,6 +28,7 @@ namespace TodoList_GUI
         {
             InitializeComponent();
             _allTasks = new TaskCollection();
+            _saveFileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TasksToDo.txt");
         }
 
         /// <summary>
@@ -90,6 +92,11 @@ namespace TodoList_GUI
         private void TodoListMainForm_Load(object sender, EventArgs e)
         {
             TryLoadTemplateFile();
+            Boolean fileLoaded = TryLoadAllTasksFromFile();
+            if(!fileLoaded)
+            {
+                MessageBox.Show(String.Format("{0} doesn't exist, create a new empty collection of tasks", _saveFileName));
+            }
             RefreshListOfTasks(null);
             RefreshButtonsAccordingSelectedTask();
         }
@@ -101,7 +108,6 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void btnNewTask_Click(object sender, EventArgs e)
         {
-
             //open a dialog to create a new task in edition mode
             using (FormTaskEditor frm = new FormTaskEditor(_templateTask))
             {
@@ -110,6 +116,7 @@ namespace TodoList_GUI
                 {
                     _allTasks.AddTask(frm.Task);
                     RefreshListOfTasks(frm.Task);
+                    SaveAllTasksToFile();
                 }
             }
         }
@@ -176,6 +183,7 @@ namespace TodoList_GUI
             {
                 _allTasks.RemoveTask(taskToDelete);
                 RefreshListOfTasks(null);
+                SaveAllTasksToFile();
             }
         }
 
@@ -217,6 +225,33 @@ namespace TodoList_GUI
         private void listViewAllTasks_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             OpenSelectedTaskInANewTab();
+        }
+
+
+        /// <summary>
+        /// Save all tasks into a file
+        /// </summary>
+        private void SaveAllTasksToFile()
+        {
+            _allTasks.SaveToFile(_saveFileName);
+        }
+
+        /// <summary>
+        /// Try to load the list of tasks from saved file
+        /// Returns true if the list of tasks was successfully loaded
+        /// Returns false if the file doesn't exist
+        /// (throw an exception if the file exists but it is incorrect ...)
+        /// </summary>
+        /// <returns></returns>
+        private Boolean TryLoadAllTasksFromFile()
+        {
+            Boolean fileLoaded = false;
+            if(File.Exists(_saveFileName))
+            {
+                _allTasks.LoadFromFile(_saveFileName);
+                fileLoaded = true;
+            }
+            return fileLoaded;
         }
 
 

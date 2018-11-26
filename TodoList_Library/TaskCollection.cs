@@ -1,7 +1,8 @@
 ﻿
+using System;
 using System.Collections.Generic;
-
-
+using System.IO;
+using System.Text;
 
 namespace TodoList_Library
 {
@@ -47,5 +48,71 @@ namespace TodoList_Library
         /// Gets an enumeration of all tasks of the collection
         /// </summary>
         public IEnumerable<TaskToDo> Tasks { get { return _allTasks; } }
+
+        /// <summary>
+        /// returns the string that isused to separate each task in a file 
+        /// </summary>
+        /// <returns></returns>
+        private String GetTaskSeparator()
+        {
+            return "//" + new String('-', 78);
+        }
+
+
+        /// <summary>
+        /// Fill a collection of tasks by loading the content of a file
+        /// </summary>
+        public void LoadFromFile(string file)
+        {
+            //read the file line by line and gather these lines into groups
+            String separator = GetTaskSeparator();
+            _allTasks.Clear();
+            StringBuilder currentGroup = null;
+            List<StringBuilder> listOfGroups = new List<StringBuilder>();
+            using (StreamReader reader = new StreamReader(file))
+            {
+                while(!reader.EndOfStream)
+                {
+                    String line = reader.ReadLine();
+                    if((line == separator) || (currentGroup == null)) //begin of new group, add this group in the list
+                    {
+                        currentGroup = new StringBuilder();
+                        listOfGroups.Add(currentGroup);
+                    }
+                    //add the line to the current group
+                    currentGroup.AppendLine(line);
+                }
+            }
+            //convert each group of lines into tasks and add them into the collection
+            TaskToStringConvertor convertor = new TaskToStringConvertor();
+            foreach(StringBuilder sb in listOfGroups)
+            {
+                TaskToDo task = convertor.StringToTask(sb.ToString());
+                _allTasks.Add(task);
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// Save the current collection to a text file
+        /// </summary>
+        /// <param name="fileName"></param>
+        public void SaveToFile(string fileName)
+        {
+            String separator = GetTaskSeparator();
+            using (StreamWriter writer = new StreamWriter(fileName, false))
+            {
+                TaskToStringConvertor convertor = new TaskToStringConvertor();
+                foreach(TaskToDo task in _allTasks)
+                {
+                    writer.WriteLine(separator);
+                    writer.WriteLine(convertor.TaskToString(task));
+                    writer.WriteLine(); //empty line
+                }
+            }
+        }
+
     }
 }
