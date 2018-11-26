@@ -1,7 +1,5 @@
-- Ouvrir une task dans un nouvel onglet
-- formatter une task avec un arbre
-- possibilité de modifier le nom d'une task
-- sauvegarder les listes dans un fichier XML
-- restaurer les listes depuis l'XML
-- ajouter des raccourcis clavier (sur la liste principale pour supprimer / renommer)
-- ajouter un menu contextuel sur la liste principale (memes fonctions que les raccourcis clavier)
+- nettoyage a faire dans les SoftRefresh / hardRefresh
+- mettre en forme les taches dans l'écran principal (vert tache terminée, orange en cours, noire pas commencée par exemple)
+- Permettre de passer en mode édition depuis la tache courante (raccourcis clavier + échange de la tache dans la collection)
+- possibilité de fermer l'onglet courant
+- possibilité de réordonner les taches dans l'écran principal
