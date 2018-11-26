@@ -145,16 +145,19 @@ namespace TodoList_GUI
                     btnNewTask.Enabled = true;
                     btnDelete.Enabled = false;
                     btnOpenSelectedTask.Enabled = false;
+                    btnEditTask.Enabled = false;
                     break;
                 case 1:
                     btnNewTask.Enabled = true;
                     btnDelete.Enabled = true;
                     btnOpenSelectedTask.Enabled = true;
+                    btnEditTask.Enabled = true;
                     break;
                 default: //multiselection
                     btnNewTask.Enabled = true;
                     btnDelete.Enabled = true;
                     btnOpenSelectedTask.Enabled = true;
+                    btnEditTask.Enabled = false;
                     break;
             }
         }
@@ -197,17 +200,10 @@ namespace TodoList_GUI
                 SaveAllTasksToFile();
                 //redraw the main list
                 RefreshListOfTasks(null);
-                //close all tabs that were linked to the deleted task
-                List<TabPage> tabsToClose = new List<TabPage>();
-                for(int i=1; i<tabs.TabCount; i++)
-                {
-                    TabPage currentPage = tabs.TabPages[i];
-                    TaskToDo task = (TaskToDo)currentPage.Tag;
-                    if (task == taskToDelete)
-                        tabsToClose.Add(currentPage);
-                }
-                foreach (TabPage tab in tabsToClose)
-                    tabs.TabPages.Remove(tab);
+                //close matching tab if opened
+                TabPage openedTab = FindTabByTask(taskToDelete);
+                if (openedTab != null)
+                    tabs.TabPages.Remove(openedTab);
             }
         }
 
@@ -222,6 +218,27 @@ namespace TodoList_GUI
             OpenSelectedTaskInANewTab();  
         }
 
+        /// <summary>
+        /// find a tab that is linked to a task
+        /// returns null if there is no tab linked to the task
+        /// </summary>
+        /// <param name="taskToFind"></param>
+        /// <returns></returns>
+        private TabPage FindTabByTask(TaskToDo taskToFind)
+        {
+            TabPage result = null;
+            for(int i=1; i<tabs.TabCount;i++)
+            {
+                TabPage currentPage = tabs.TabPages[i];
+                TaskToDo task = (TaskToDo) currentPage.Tag;
+                if(task == taskToFind)
+                {
+                    result = currentPage;
+                    break;
+                }
+            }
+            return result;
+        }
 
         /// <summary>
         /// Open the selected task in a new tab
@@ -232,18 +249,24 @@ namespace TodoList_GUI
             TaskToDo currentTask = GetCurrentSelectedTask();
             if (currentTask == null)
                 return;
-            //create a new tab with its components
-            TabPage newTab = new TabPage(currentTask.Name);
-            TreeView treeView = new TreeView();
-            treeView.Name = "treeViewTask";
-            treeView.KeyDown += TreeView_KeyDown;
-            newTab.Controls.Add(treeView);
-            treeView.Dock = DockStyle.Fill;
-            //link the tab to the task
-            newTab.Tag = currentTask;
-            tabs.TabPages.Add(newTab);
-            //Draw the tab content
-            RefreshTaskTab(newTab, true);
+            //look if the task is already opened in an existing tab
+            TabPage newTab = FindTabByTask(currentTask);
+            if(newTab == null)//task is not opened, create a new tab
+            {
+                //create a new tab with its components
+                newTab = new TabPage(currentTask.Name);
+                TreeView treeView = new TreeView();
+                treeView.Name = "treeViewTask";
+                treeView.KeyDown += TreeView_KeyDown;
+                newTab.Controls.Add(treeView);
+                treeView.Dock = DockStyle.Fill;
+                //link the tab to the task
+                newTab.Tag = currentTask;
+                tabs.TabPages.Add(newTab);
+                //Draw the tab content
+                RefreshTaskTab(newTab, true);
+            }
+            
             //switch to the new tab
             tabs.SelectedTab = newTab;
         }
@@ -501,6 +524,55 @@ namespace TodoList_GUI
                     TaskToDo myTask = dlg.Task;
                     MessageBox.Show(myTask.Name);
                 }
+            }
+        }
+
+        /// <summary>
+        /// click onthe button Edit current task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEditTask_Click(object sender, EventArgs e)
+        {
+            TaskToDo currentTask = GetCurrentSelectedTask();
+            TaskToDo newTask = null;
+            if (currentTask == null) //nothing to do if there is no selected task
+                return;
+            //edit the task
+            using (FormTaskEditor frm = new FormTaskEditor(currentTask))
+            {
+                if(frm.ShowDialog() == DialogResult.OK)
+                {
+                    newTask = frm.Task;
+                    //task was edited, proceed to the swap
+                    _allTasks.ReplaceTask(currentTask, newTask);
+                    //save the replacement
+                    SaveAllTasksToFile();
+                    //Refresh the list of tasks
+                    RefreshListOfTasks(newTask);
+                    //refresh tab of the edited task if already opened
+                    TabPage openedTab = FindTabByTask(currentTask);
+                    if(openedTab != null)
+                    {
+                        openedTab.Tag = newTask;
+                        RefreshTaskTab(openedTab, true);
+                    }
+                }
+            }
+            
+        }
+
+        /// <summary>
+        /// double click on the tab component
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tabs_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            //close the current selected index
+            if(tabs.SelectedIndex > 0) //don't close the main page
+            {
+                tabs.TabPages.Remove(tabs.SelectedTab);
             }
         }
     }

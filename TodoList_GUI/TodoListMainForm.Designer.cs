@@ -36,6 +36,7 @@
             this.listViewAllTasks = new System.Windows.Forms.ListView();
             this.btnCloseApp = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
+            this.btnEditTask = new System.Windows.Forms.Button();
             this.tabs.SuspendLayout();
             this.tabAllTasks.SuspendLayout();
             this.SuspendLayout();
@@ -52,9 +53,11 @@
             this.tabs.SelectedIndex = 0;
             this.tabs.Size = new System.Drawing.Size(818, 315);
             this.tabs.TabIndex = 0;
+            this.tabs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tabs_MouseDoubleClick);
             // 
             // tabAllTasks
             // 
+            this.tabAllTasks.Controls.Add(this.btnEditTask);
             this.tabAllTasks.Controls.Add(this.btnOpenSelectedTask);
             this.tabAllTasks.Controls.Add(this.btnDelete);
             this.tabAllTasks.Controls.Add(this.btnNewTask);
@@ -75,7 +78,7 @@
             this.btnOpenSelectedTask.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnOpenSelectedTask.Name = "btnOpenSelectedTask";
             this.btnOpenSelectedTask.Size = new System.Drawing.Size(163, 36);
-            this.btnOpenSelectedTask.TabIndex = 1;
+            this.btnOpenSelectedTask.TabIndex = 2;
             this.btnOpenSelectedTask.Text = "View";
             this.btnOpenSelectedTask.UseVisualStyleBackColor = true;
             this.btnOpenSelectedTask.Click += new System.EventHandler(this.btnOpenSelectedTask_Click);
@@ -83,11 +86,11 @@
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(642, 146);
+            this.btnDelete.Location = new System.Drawing.Point(638, 134);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(163, 36);
-            this.btnDelete.TabIndex = 1;
+            this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -149,6 +152,18 @@
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
+            // btnEditTask
+            // 
+            this.btnEditTask.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditTask.Location = new System.Drawing.Point(638, 93);
+            this.btnEditTask.Name = "btnEditTask";
+            this.btnEditTask.Size = new System.Drawing.Size(163, 34);
+            this.btnEditTask.TabIndex = 3;
+            this.btnEditTask.Text = "Edit";
+            this.btnEditTask.UseVisualStyleBackColor = true;
+            this.btnEditTask.Click += new System.EventHandler(this.btnEditTask_Click);
+            // 
             // TodoListMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -180,6 +195,7 @@
         private System.Windows.Forms.ListView listViewAllTasks;
         private System.Windows.Forms.Button btnOpenSelectedTask;
         private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnEditTask;
     }
 }
 

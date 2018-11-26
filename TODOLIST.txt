@@ -1,5 +1,1 @@
-- nettoyage a faire dans les SoftRefresh / hardRefresh
-- mettre en forme les taches dans l'écran principal (vert tache terminée, orange en cours, noire pas commencée par exemple)
-- Permettre de passer en mode édition depuis la tache courante (raccourcis clavier + échange de la tache dans la collection)
-- possibilité de fermer l'onglet courant
-- possibilité de réordonner les taches dans l'écran principal
+LaTODOLIST estpour le moment intégrée dans le logiciel (elle sert de tache d'essai).

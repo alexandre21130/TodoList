@@ -114,5 +114,17 @@ namespace TodoList_Library
             }
         }
 
+        /// <summary>
+        /// replace a task in the collection by a new one
+        /// </summary>
+        /// <param name="taskToReplace"></param>
+        /// <param name="taskToInsert"></param>
+        public void ReplaceTask(TaskToDo taskToReplace, TaskToDo taskToInsert)
+        {
+            int index = _allTasks.IndexOf(taskToReplace);
+            _allTasks.RemoveAt(index);
+            _allTasks.Insert(index, taskToInsert);
+        }
+
     }
 }
