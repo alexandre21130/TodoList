@@ -20,6 +20,11 @@ namespace TodoList_GUI
         private String _templateTask;
         private String _saveFileName;
 
+        private Font _fontForCompletedTasks;
+        private Font _fontForNotCompletedTasks;
+        Color _colorForCompletedTasks;
+        Color _colorForNotCompletedTasks;
+
 
         /// <summary>
         /// constructor of the main form
@@ -29,6 +34,11 @@ namespace TodoList_GUI
             InitializeComponent();
             _allTasks = new TaskCollection();
             _saveFileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TasksToDo.txt");
+
+            _fontForCompletedTasks = new Font(this.Font, FontStyle.Strikeout);
+            _fontForNotCompletedTasks = new Font(this.Font, FontStyle.Regular);
+            _colorForCompletedTasks = Color.DarkGreen;
+            _colorForNotCompletedTasks = this.ForeColor;
         }
 
         /// <summary>
@@ -226,31 +236,161 @@ namespace TodoList_GUI
             TabPage newTab = new TabPage(currentTask.Name);
             TreeView treeView = new TreeView();
             treeView.Name = "treeViewTask";
-            treeView.Dock = DockStyle.Fill;
+            treeView.KeyDown += TreeView_KeyDown;
             newTab.Controls.Add(treeView);
+            treeView.Dock = DockStyle.Fill;
             //link the tab to the task
             newTab.Tag = currentTask;
             tabs.TabPages.Add(newTab);
             //Draw the tab content
-            RefreshTab(newTab);
+            RefreshTaskTab(newTab, true);
             //switch to the new tab
             tabs.SelectedTab = newTab;
+        }
+
+        /// <summary>
+        /// occurs when a key is pressed on a treeview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TreeView_KeyDown(object sender, KeyEventArgs e)
+        {
+            //get the treeview that raised the event
+            TreeView tv = (TreeView)sender;
+            //get the selected task
+            TaskToDo selectedTask = GetSelectedTaskInTreeView(tv);
+            //do something according to the key that was pressed
+            switch(e.KeyCode)
+            {
+                case Keys.Space: //spacebar => set the current selected task as completed or not completed
+                    if(selectedTask != null)
+                    {
+                        if (selectedTask.IsCompleted)
+                            selectedTask.SetNotCompleted();
+                        else
+                            selectedTask.SetCompleted();
+
+                        RefreshCurrentTaskTab();
+                        SaveAllTasksToFile();
+                    }
+                    break;
+            }
+        }
+
+
+        /// <summary>
+        /// Update the presentation of the treeview (no changes on the nodes themselves)
+        /// </summary>
+        private void Treeview_SoftRefresh(TreeView tv)
+        {
+            TreeNode_SoftRefresh(tv.Nodes[0]);
+        }
+
+        /// <summary>
+        /// refresh the presentation of a given task node in a treeview
+        /// do a recursive call to refresh its subnodes too
+        /// </summary>
+        /// <param name="tn"></param>
+        private void TreeNode_SoftRefresh(TreeNode tn)
+        {
+            //update the presentation of the current node
+            TaskToDo task = (TaskToDo)tn.Tag;
+            if(task.IsCompleted)
+            {
+                tn.NodeFont = _fontForCompletedTasks;
+                tn.ForeColor = _colorForCompletedTasks;
+            }
+            else
+            {
+                tn.NodeFont = _fontForNotCompletedTasks;
+                tn.ForeColor = _colorForNotCompletedTasks;
+            }
+            //update child nodes recursively
+            foreach (TreeNode subNode in tn.Nodes)
+                TreeNode_SoftRefresh(subNode);
+
         }
 
         /// <summary>
         /// Refresh the display of a given task tab 
         /// </summary>
         /// <param name="tabToRefresh"></param>
-        private void RefreshTab(TabPage tabToRefresh)
+        private void RefreshTaskTab(TabPage tabToRefresh, Boolean hardRefresh)
         {
-            //get the treenode associated to the tab
+            //get the treeview associated to the tab
             TreeView treeView = (TreeView) (tabToRefresh.Controls["treeViewTask"]);
-            //get the task associated to the tab
-            TaskToDo task = (TaskToDo) tabToRefresh.Tag;
-            //Refresh tab title
-            tabToRefresh.Text = task.Name;
-            //draw the task in the treeView
-            DrawTaskInTreeView(treeView, task);
+            if(hardRefresh)
+            {
+                //get the task associated to the tab
+                TaskToDo task = (TaskToDo)tabToRefresh.Tag;
+                //save the selected task in treeview
+                TaskToDo selectedTask = GetSelectedTaskInTreeView(treeView);
+                //Refresh tab title
+                tabToRefresh.Text = task.Name;
+                //draw the task in the treeView
+                DrawTaskInTreeView(treeView, task);
+                //Select the previously selected task
+                SelectTaskInTreeView(treeView, selectedTask);
+            }
+            else
+            {
+                Treeview_SoftRefresh(treeView);
+            }
+            
+        }
+
+        /// <summary>
+        /// Try to find a node that is linked to a given task
+        /// returns null if there is no node with this task
+        /// </summary>
+        /// <param name="taskToFind"></param>
+        /// <returns></returns>
+        private TreeNode FindNode(TreeNode rootNode, TaskToDo taskToFind)
+        {
+            TreeNode result = null;
+            TaskToDo currentTask = (TaskToDo) rootNode.Tag;
+            if (currentTask == taskToFind) //current node matches
+                result = rootNode;
+            else //current node doesn't match, try with child nodes (recursive call)
+            {
+                foreach(TreeNode subNode in rootNode.Nodes)
+                {
+                    result = FindNode(subNode, taskToFind);
+                    if (result != null)
+                        break;
+                }
+            }
+            return result;
+        }
+
+
+
+        /// <summary>
+        /// Select the node that is linked to a given task in a treeview
+        /// Select nothing if the task is not present in the treeview
+        /// </summary>
+        /// <param name="tv"></param>
+        /// <param name="task"></param>
+        private void SelectTaskInTreeView(TreeView tv, TaskToDo task)
+        {
+            tv.SelectedNode = FindNode(tv.Nodes[0], task);
+        }
+
+        /// <summary>
+        /// Gets the selected task in a given treeview
+        /// returns null if there is no selected task
+        /// </summary>
+        /// <param name="tv"></param>
+        /// <returns></returns>
+        private TaskToDo GetSelectedTaskInTreeView(TreeView tv)
+        {
+            TaskToDo result = null;
+            if(tv.SelectedNode != null)
+            {
+                result = (TaskToDo)tv.SelectedNode.Tag;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -261,9 +401,38 @@ namespace TodoList_GUI
         private void DrawTaskInTreeView(TreeView tv, TaskToDo task)
         {
             tv.Nodes.Clear();
-            tv.Nodes.Add(task.Name);
-            //TODO : to implement
+            TreeNode rootNode = tv.Nodes.Add(task.Name);
+            DrawTaskInTreeNodeRecursive(rootNode, task);
+            tv.ExpandAll();
+        }
 
+        /// <summary>
+        /// Draw a task in a treenode and create all subnodes for subtasks of this task
+        /// This function should be called recursively at each level of the tree to draw all subtasks
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="task"></param>
+        private void DrawTaskInTreeNodeRecursive(TreeNode node, TaskToDo task)
+        {
+            //draw the node at current level
+            node.Text = task.Name;
+            node.Tag = task;
+            if(task.IsCompleted)
+            {
+                node.ForeColor = _colorForCompletedTasks;
+                node.NodeFont = _fontForCompletedTasks;
+            }
+            else
+            {
+                node.ForeColor = _colorForNotCompletedTasks;
+                node.NodeFont = _fontForNotCompletedTasks;
+            }
+            //draw each subtask
+            foreach(TaskToDo subtask in task.Subtasks)
+            {
+                TreeNode subNode = node.Nodes.Add(subtask.Name);
+                DrawTaskInTreeNodeRecursive(subNode, subtask);
+            }
         }
 
         /// <summary>
@@ -277,7 +446,7 @@ namespace TodoList_GUI
             //get the current tab
             TabPage currentTab = tabs.SelectedTab;
             //Refresh it
-            RefreshTab(currentTab);
+            RefreshTaskTab(currentTab, false);
         }
 
         /// <summary>
