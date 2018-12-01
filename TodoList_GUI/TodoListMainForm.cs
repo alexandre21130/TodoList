@@ -112,23 +112,34 @@ namespace TodoList_GUI
         }
 
         /// <summary>
+        /// Open a dialog to create a new task and add this new task in the list
+        /// </summary>
+        private void CreateNewTask()
+        {
+            //open a dialog to create a new task in edition mode
+            using (FormTaskEditor frm = new FormTaskEditor(_templateTask))
+            {
+                //if user completed the creation process, add the new task in list
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    TaskToDo newTask = frm.Task;
+                    _allTasks.AddTask(newTask);
+                    RefreshListOfTasks(newTask);
+                    SaveAllTasksToFile();
+                    //Open the newtask in a tab
+                    OpenTaskInTab(newTask);
+                }
+            }
+        }
+
+        /// <summary>
         /// click on the button new task
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnNewTask_Click(object sender, EventArgs e)
         {
-            //open a dialog to create a new task in edition mode
-            using (FormTaskEditor frm = new FormTaskEditor(_templateTask))
-            {
-                //if user completed the creation process, add the new task in list
-                if(frm.ShowDialog() == DialogResult.OK)
-                {
-                    _allTasks.AddTask(frm.Task);
-                    RefreshListOfTasks(frm.Task);
-                    SaveAllTasksToFile();
-                }
-            }
+            CreateNewTask();
         }
 
         
@@ -279,6 +290,35 @@ namespace TodoList_GUI
         }
 
         /// <summary>
+        /// open a given task in a new tab
+        /// if there is already a tab linked to this task, switch to this tab
+        /// </summary>
+        /// <param name="task"></param>
+        private void OpenTaskInTab(TaskToDo task)
+        {
+            //look if the task is already opened in an existing tab
+            TabPage newTab = FindTabByTask(task);
+            if (newTab == null)//task is not opened, create a new tab
+            {
+                //create a new tab with its components
+                newTab = new TabPage(task.Name);
+                TreeView treeView = new TreeView();
+                treeView.Name = "treeViewTask";
+                treeView.KeyDown += TreeView_KeyDown;
+                newTab.Controls.Add(treeView);
+                treeView.Dock = DockStyle.Fill;
+                //link the tab to the task
+                newTab.Tag = task;
+                tabs.TabPages.Add(newTab);
+                //Draw the tab content
+                RefreshTaskTab(newTab, true);
+            }
+
+            //switch to the new tab
+            tabs.SelectedTab = newTab;
+        }
+
+        /// <summary>
         /// Open the selected task in a new tab
         /// </summary>
         private void OpenSelectedTaskInANewTab()
@@ -287,26 +327,7 @@ namespace TodoList_GUI
             TaskToDo currentTask = GetCurrentSelectedTask();
             if (currentTask == null)
                 return;
-            //look if the task is already opened in an existing tab
-            TabPage newTab = FindTabByTask(currentTask);
-            if(newTab == null)//task is not opened, create a new tab
-            {
-                //create a new tab with its components
-                newTab = new TabPage(currentTask.Name);
-                TreeView treeView = new TreeView();
-                treeView.Name = "treeViewTask";
-                treeView.KeyDown += TreeView_KeyDown;
-                newTab.Controls.Add(treeView);
-                treeView.Dock = DockStyle.Fill;
-                //link the tab to the task
-                newTab.Tag = currentTask;
-                tabs.TabPages.Add(newTab);
-                //Draw the tab content
-                RefreshTaskTab(newTab, true);
-            }
-            
-            //switch to the new tab
-            tabs.SelectedTab = newTab;
+            OpenTaskInTab(currentTask);
         }
 
         /// <summary>
