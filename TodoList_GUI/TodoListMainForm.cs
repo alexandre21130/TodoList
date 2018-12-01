@@ -60,6 +60,15 @@ namespace TodoList_GUI
             return fileRead;
         }
 
+        /// <summary>
+        /// Closes the application
+        /// </summary>
+        private void CloseApplication()
+        {
+            this.Close(); //closes the main form, quits the application 
+
+        }
+
 
         /// <summary>
         /// click on the button Quit (closes the application) 
@@ -68,7 +77,7 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void btnCloseApp_Click(object sender, EventArgs e)
         {
-            this.Close(); //closes the main form, quits the application 
+            CloseApplication();
         }
 
 
@@ -693,6 +702,26 @@ namespace TodoList_GUI
                     DeleteCurrentSelectedTask();
                     break;
             }
+        }
+
+        /// <summary>
+        /// Occurs when a key is pressed at the level of the form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TodoListMainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch(e.KeyCode)
+            {
+                case Keys.Escape: //Escape => close the current tab if specific task, closes the application if mainTab
+                    if (IsMainTabSelected())
+                        CloseApplication();
+                    else
+                        CloseSelectedTab();
+                    break;
+
+            }
+
         }
     }
 }

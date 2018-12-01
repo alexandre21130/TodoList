@@ -54,7 +54,7 @@
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
             this.tabs.Size = new System.Drawing.Size(598, 367);
-            this.tabs.TabIndex = 0;
+            this.tabs.TabIndex = 1;
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_SelectedIndexChanged);
             this.tabs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tabs_MouseDoubleClick);
             // 
@@ -98,7 +98,7 @@
             this.btnEditTask.Margin = new System.Windows.Forms.Padding(0);
             this.btnEditTask.Name = "btnEditTask";
             this.btnEditTask.Size = new System.Drawing.Size(67, 26);
-            this.btnEditTask.TabIndex = 3;
+            this.btnEditTask.TabIndex = 2;
             this.btnEditTask.Text = "Edit";
             this.btnEditTask.UseVisualStyleBackColor = true;
             this.btnEditTask.Click += new System.EventHandler(this.btnEditTask_Click);
@@ -109,7 +109,7 @@
             this.btnOpenSelectedTask.Margin = new System.Windows.Forms.Padding(0);
             this.btnOpenSelectedTask.Name = "btnOpenSelectedTask";
             this.btnOpenSelectedTask.Size = new System.Drawing.Size(67, 26);
-            this.btnOpenSelectedTask.TabIndex = 2;
+            this.btnOpenSelectedTask.TabIndex = 1;
             this.btnOpenSelectedTask.Text = "View";
             this.btnOpenSelectedTask.UseVisualStyleBackColor = true;
             this.btnOpenSelectedTask.Click += new System.EventHandler(this.btnOpenSelectedTask_Click);
@@ -120,7 +120,7 @@
             this.btnDelete.Margin = new System.Windows.Forms.Padding(0);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(67, 26);
-            this.btnDelete.TabIndex = 4;
+            this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -131,7 +131,7 @@
             this.btnNewTask.Margin = new System.Windows.Forms.Padding(0);
             this.btnNewTask.Name = "btnNewTask";
             this.btnNewTask.Size = new System.Drawing.Size(67, 26);
-            this.btnNewTask.TabIndex = 1;
+            this.btnNewTask.TabIndex = 0;
             this.btnNewTask.Text = "New";
             this.btnNewTask.UseVisualStyleBackColor = true;
             this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
@@ -144,7 +144,7 @@
             this.btnCloseApp.Margin = new System.Windows.Forms.Padding(0);
             this.btnCloseApp.Name = "btnCloseApp";
             this.btnCloseApp.Size = new System.Drawing.Size(67, 26);
-            this.btnCloseApp.TabIndex = 1;
+            this.btnCloseApp.TabIndex = 5;
             this.btnCloseApp.Text = "Quit";
             this.btnCloseApp.UseVisualStyleBackColor = true;
             this.btnCloseApp.Click += new System.EventHandler(this.btnCloseApp_Click);
@@ -163,7 +163,7 @@
             this.flowButtons.Location = new System.Drawing.Point(18, 11);
             this.flowButtons.Name = "flowButtons";
             this.flowButtons.Size = new System.Drawing.Size(590, 36);
-            this.flowButtons.TabIndex = 5;
+            this.flowButtons.TabIndex = 0;
             // 
             // btnCloseSelectedTab
             // 
@@ -171,7 +171,7 @@
             this.btnCloseSelectedTab.Margin = new System.Windows.Forms.Padding(0);
             this.btnCloseSelectedTab.Name = "btnCloseSelectedTab";
             this.btnCloseSelectedTab.Size = new System.Drawing.Size(67, 26);
-            this.btnCloseSelectedTab.TabIndex = 5;
+            this.btnCloseSelectedTab.TabIndex = 4;
             this.btnCloseSelectedTab.Text = "Close";
             this.btnCloseSelectedTab.UseVisualStyleBackColor = true;
             this.btnCloseSelectedTab.Click += new System.EventHandler(this.buttonCloseSelectedTab_Click);
@@ -180,16 +180,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCloseApp;
             this.ClientSize = new System.Drawing.Size(624, 425);
             this.Controls.Add(this.flowButtons);
             this.Controls.Add(this.tabs);
             this.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "TodoListMainForm";
             this.Text = "TodoList";
             this.Load += new System.EventHandler(this.TodoListMainForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TodoListMainForm_KeyDown);
             this.tabs.ResumeLayout(false);
             this.tabAllTasks.ResumeLayout(false);
             this.flowButtons.ResumeLayout(false);

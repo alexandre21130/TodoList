@@ -88,5 +88,14 @@ namespace TodoList_GUI
             DialogResult = DialogResult.Cancel;
         }
 
+        /// <summary>
+        /// Occurs during the form loading
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FormTaskEditor_Load(object sender, EventArgs e)
+        {
+            this.ActiveControl = txtTask;
+        }
     }
 }

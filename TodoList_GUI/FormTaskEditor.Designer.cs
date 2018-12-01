@@ -39,7 +39,7 @@
             this.btnOK.Location = new System.Drawing.Point(397, 224);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(82, 25);
-            this.btnOK.TabIndex = 0;
+            this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -47,10 +47,11 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(485, 224);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(82, 25);
-            this.btnCancel.TabIndex = 0;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -66,7 +67,7 @@
             this.txtTask.Location = new System.Drawing.Point(12, 12);
             this.txtTask.Name = "txtTask";
             this.txtTask.Size = new System.Drawing.Size(555, 206);
-            this.txtTask.TabIndex = 1;
+            this.txtTask.TabIndex = 0;
             this.txtTask.Text = "";
             this.txtTask.WordWrap = false;
             // 
@@ -83,6 +84,7 @@
             this.ForeColor = System.Drawing.Color.RoyalBlue;
             this.Name = "FormTaskEditor";
             this.Text = "Edition";
+            this.Load += new System.EventHandler(this.FormTaskEditor_Load);
             this.ResumeLayout(false);
 
         }
