@@ -215,14 +215,12 @@ namespace TodoList_GUI
         }
 
         /// <summary>
-        /// Click on the button delete to delete a task
+        /// Delete the current selected task
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void DeleteCurrentSelectedTask()
         {
             TaskToDo taskToDelete = GetCurrentSelectedTask();
-            if(taskToDelete != null)
+            if (taskToDelete != null)
             {
                 //remove the task from the internal collection
                 _allTasks.RemoveTask(taskToDelete);
@@ -235,6 +233,16 @@ namespace TodoList_GUI
                 if (openedTab != null)
                     tabs.TabPages.Remove(openedTab);
             }
+        }
+
+        /// <summary>
+        /// Click on the button delete to delete a task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DeleteCurrentSelectedTask();
         }
 
 
@@ -326,6 +334,9 @@ namespace TodoList_GUI
                         RefreshCurrentTaskTab();
                         SaveAllTasksToFile();
                     }
+                    break;
+                case Keys.F2: //F2 => switch to edit mode
+                    EditCurrentSelectedTask();
                     break;
             }
         }
@@ -558,20 +569,19 @@ namespace TodoList_GUI
         }
 
         /// <summary>
-        /// click onthe button Edit current task
+        /// Switch to edition mode for the current selected task and update it 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnEditTask_Click(object sender, EventArgs e)
+        private void EditCurrentSelectedTask()
         {
             TaskToDo currentTask = GetCurrentSelectedTask();
-            TaskToDo newTask = null;
             if (currentTask == null) //nothing to do if there is no selected task
                 return;
+
             //edit the task
+            TaskToDo newTask = null;
             using (FormTaskEditor frm = new FormTaskEditor(currentTask))
             {
-                if(frm.ShowDialog() == DialogResult.OK)
+                if (frm.ShowDialog() == DialogResult.OK)
                 {
                     newTask = frm.Task;
                     //task was edited, proceed to the swap
@@ -582,14 +592,23 @@ namespace TodoList_GUI
                     RefreshListOfTasks(newTask);
                     //refresh tab of the edited task if already opened
                     TabPage openedTab = FindTabByTask(currentTask);
-                    if(openedTab != null)
+                    if (openedTab != null)
                     {
                         openedTab.Tag = newTask;
                         RefreshTaskTab(openedTab, true);
                     }
                 }
             }
-            
+        }
+
+        /// <summary>
+        /// click on the button Edit current task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEditTask_Click(object sender, EventArgs e)
+        {
+            EditCurrentSelectedTask();
         }
 
         /// <summary>
@@ -629,6 +648,30 @@ namespace TodoList_GUI
         private void buttonCloseSelectedTab_Click(object sender, EventArgs e)
         {
             CloseSelectedTab();
+        }
+
+        /// <summary>
+        /// occurs on KeyDown on the main List of tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewAllTasks_KeyDown(object sender, KeyEventArgs e)
+        {
+            TaskToDo currentTask = GetCurrentSelectedTask();
+            if (currentTask == null) //do nothing if there is no selected task
+                return;
+            switch(e.KeyCode)
+            {
+                case Keys.Space:
+                    OpenSelectedTaskInANewTab();
+                    break;
+                case Keys.F2:
+                    EditCurrentSelectedTask();
+                    break;
+                case Keys.Delete:
+                    DeleteCurrentSelectedTask();
+                    break;
+            }
         }
     }
 }

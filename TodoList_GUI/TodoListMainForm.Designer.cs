@@ -89,6 +89,7 @@
             this.listViewAllTasks.UseCompatibleStateImageBehavior = false;
             this.listViewAllTasks.View = System.Windows.Forms.View.List;
             this.listViewAllTasks.SelectedIndexChanged += new System.EventHandler(this.listViewAllTasks_SelectedIndexChanged);
+            this.listViewAllTasks.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listViewAllTasks_KeyDown);
             this.listViewAllTasks.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewAllTasks_MouseDoubleClick);
             // 
             // btnEditTask
