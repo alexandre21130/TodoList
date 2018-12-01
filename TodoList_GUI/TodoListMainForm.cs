@@ -90,7 +90,7 @@ namespace TodoList_GUI
             }
             listViewAllTasks.EndUpdate();
             listViewAllTasks.Focus();
-            RefreshButtonsAccordingSelectedTask();
+            EnableButtonsAccordingSelectedTask();
         }
 
 
@@ -108,7 +108,7 @@ namespace TodoList_GUI
                 MessageBox.Show(String.Format("{0} doesn't exist, create a new empty collection of tasks", _saveFileName));
             }
             RefreshListOfTasks(null);
-            RefreshButtonsAccordingSelectedTask();
+            EnableButtonsAccordingSelectedTask();
         }
 
         /// <summary>
@@ -132,45 +132,75 @@ namespace TodoList_GUI
         }
 
         
+        /// <summary>
+        /// returns true if the main tab is currently selected, else returns false
+        /// </summary>
+        /// <returns></returns>
+        private Boolean IsMainTabSelected()
+        {
+            return tabs.SelectedIndex == 0;
+        }
 
         /// <summary>
         /// Enable or disable buttons of the main tab according to the current selection
         /// </summary>
-        private void RefreshButtonsAccordingSelectedTask()
+        private void EnableButtonsAccordingSelectedTask()
         {
-            int nbSelected = listViewAllTasks.SelectedItems.Count;
-            switch(nbSelected)
+            if(IsMainTabSelected()) //we are on the main tab
             {
-                case 0:
-                    btnNewTask.Enabled = true;
-                    btnDelete.Enabled = false;
-                    btnOpenSelectedTask.Enabled = false;
-                    btnEditTask.Enabled = false;
-                    break;
-                case 1:
-                    btnNewTask.Enabled = true;
-                    btnDelete.Enabled = true;
-                    btnOpenSelectedTask.Enabled = true;
-                    btnEditTask.Enabled = true;
-                    break;
-                default: //multiselection
-                    btnNewTask.Enabled = true;
-                    btnDelete.Enabled = true;
-                    btnOpenSelectedTask.Enabled = true;
-                    btnEditTask.Enabled = false;
-                    break;
+                btnCloseSelectedTab.Enabled = false;
+                int nbSelected = listViewAllTasks.SelectedItems.Count;
+                switch (nbSelected)
+                {
+                    case 0:
+                        btnNewTask.Enabled = true;
+                        btnDelete.Enabled = false;
+                        btnOpenSelectedTask.Enabled = false;
+                        btnEditTask.Enabled = false;
+                        break;
+                    case 1:
+                        btnNewTask.Enabled = true;
+                        btnDelete.Enabled = true;
+                        btnOpenSelectedTask.Enabled = true;
+                        btnEditTask.Enabled = true;
+                        break;
+                    default: //multiselection
+                        btnNewTask.Enabled = true;
+                        btnDelete.Enabled = true;
+                        btnOpenSelectedTask.Enabled = true;
+                        btnEditTask.Enabled = false;
+                        break;
+                }
+            }
+            else //we are on a specific task tab
+            {
+                btnCloseSelectedTab.Enabled = true;
+                btnNewTask.Enabled = true;
+                btnDelete.Enabled = true;
+                btnOpenSelectedTask.Enabled = false;
+                btnEditTask.Enabled = true;
             }
         }
 
         /// <summary>
         /// gets the task to do tht is currently selected (null if nothing is selected)
+        /// On the main tab, result is the task that is currently selected (if there is only one task)
+        /// if we are on an other tab, result is the task associated to the current tab
         /// </summary>
         /// <returns></returns>
         private TaskToDo GetCurrentSelectedTask()
         {
             TaskToDo result = null;
-            if(listViewAllTasks.SelectedItems.Count == 1)
-                result = (TaskToDo)listViewAllTasks.SelectedItems[0].Tag;
+            if(IsMainTabSelected())
+            {
+                if (listViewAllTasks.SelectedItems.Count == 1)
+                    result = (TaskToDo)listViewAllTasks.SelectedItems[0].Tag;
+            }
+            else
+            {
+                result = (TaskToDo)tabs.SelectedTab.Tag;
+            }
+            
             return result;
         }
 
@@ -181,7 +211,7 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void listViewAllTasks_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RefreshButtonsAccordingSelectedTask();
+            EnableButtonsAccordingSelectedTask();
         }
 
         /// <summary>
@@ -464,7 +494,7 @@ namespace TodoList_GUI
         private void RefreshCurrentTaskTab()
         {
             //do nothing if selected tab is the main list
-            if (tabs.SelectedIndex == 0)
+            if (IsMainTabSelected())
                 return;
             //get the current tab
             TabPage currentTab = tabs.SelectedTab;
@@ -569,11 +599,36 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void tabs_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //close the current selected index
-            if(tabs.SelectedIndex > 0) //don't close the main page
-            {
+            CloseSelectedTab();
+        }
+
+        /// <summary>
+        /// occurs each time we change the selected tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tabs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            EnableButtonsAccordingSelectedTask();
+        }
+
+        /// <summary>
+        /// Closes the currently selected tab (do nothing if selected tab is the main tab)
+        /// </summary>
+        private void CloseSelectedTab()
+        {
+            if (!IsMainTabSelected())
                 tabs.TabPages.Remove(tabs.SelectedTab);
-            }
+        }
+
+        /// <summary>
+        /// click on the button Close Selected tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonCloseSelectedTab_Click(object sender, EventArgs e)
+        {
+            CloseSelectedTab();
         }
     }
 }
