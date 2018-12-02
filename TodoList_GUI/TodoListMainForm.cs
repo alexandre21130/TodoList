@@ -52,7 +52,7 @@ namespace TodoList_GUI
             String path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TemplateTask.txt");
             if (File.Exists(path))
             {
-                _templateTask = File.ReadAllText(path);
+                _templateTask = File.ReadAllText(path, Encoding.UTF8);
                 fileRead = true;
             }
             else
