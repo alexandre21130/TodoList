@@ -31,16 +31,16 @@
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabAllTasks = new System.Windows.Forms.TabPage();
             this.listViewAllTasks = new System.Windows.Forms.ListView();
-            this.btnEditTask = new System.Windows.Forms.Button();
-            this.btnOpenSelectedTask = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnNewTask = new System.Windows.Forms.Button();
-            this.btnCloseApp = new System.Windows.Forms.Button();
-            this.flowButtons = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnCloseSelectedTab = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabs.SuspendLayout();
             this.tabAllTasks.SuspendLayout();
-            this.flowButtons.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
@@ -49,11 +49,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabs.Controls.Add(this.tabAllTasks);
-            this.tabs.Location = new System.Drawing.Point(14, 47);
+            this.tabs.Location = new System.Drawing.Point(14, 28);
             this.tabs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(598, 367);
+            this.tabs.Size = new System.Drawing.Size(598, 386);
             this.tabs.TabIndex = 1;
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_SelectedIndexChanged);
             this.tabs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tabs_MouseDoubleClick);
@@ -65,7 +65,7 @@
             this.tabAllTasks.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabAllTasks.Name = "tabAllTasks";
             this.tabAllTasks.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabAllTasks.Size = new System.Drawing.Size(590, 338);
+            this.tabAllTasks.Size = new System.Drawing.Size(590, 357);
             this.tabAllTasks.TabIndex = 0;
             this.tabAllTasks.Text = "All tasks";
             this.tabAllTasks.UseVisualStyleBackColor = true;
@@ -84,7 +84,7 @@
             this.listViewAllTasks.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listViewAllTasks.MultiSelect = false;
             this.listViewAllTasks.Name = "listViewAllTasks";
-            this.listViewAllTasks.Size = new System.Drawing.Size(575, 316);
+            this.listViewAllTasks.Size = new System.Drawing.Size(575, 335);
             this.listViewAllTasks.TabIndex = 0;
             this.listViewAllTasks.UseCompatibleStateImageBehavior = false;
             this.listViewAllTasks.View = System.Windows.Forms.View.List;
@@ -92,100 +92,74 @@
             this.listViewAllTasks.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listViewAllTasks_KeyDown);
             this.listViewAllTasks.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewAllTasks_MouseDoubleClick);
             // 
-            // btnEditTask
+            // menuStrip1
             // 
-            this.btnEditTask.Location = new System.Drawing.Point(134, 0);
-            this.btnEditTask.Margin = new System.Windows.Forms.Padding(0);
-            this.btnEditTask.Name = "btnEditTask";
-            this.btnEditTask.Size = new System.Drawing.Size(67, 26);
-            this.btnEditTask.TabIndex = 2;
-            this.btnEditTask.Text = "Edit";
-            this.btnEditTask.UseVisualStyleBackColor = true;
-            this.btnEditTask.Click += new System.EventHandler(this.btnEditTask_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
+            this.openToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.deleteToolStripMenuItem,
+            this.closeToolStripMenuItem,
+            this.quitToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(624, 24);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // btnOpenSelectedTask
+            // newToolStripMenuItem
             // 
-            this.btnOpenSelectedTask.Location = new System.Drawing.Point(67, 0);
-            this.btnOpenSelectedTask.Margin = new System.Windows.Forms.Padding(0);
-            this.btnOpenSelectedTask.Name = "btnOpenSelectedTask";
-            this.btnOpenSelectedTask.Size = new System.Drawing.Size(67, 26);
-            this.btnOpenSelectedTask.TabIndex = 1;
-            this.btnOpenSelectedTask.Text = "View";
-            this.btnOpenSelectedTask.UseVisualStyleBackColor = true;
-            this.btnOpenSelectedTask.Click += new System.EventHandler(this.btnOpenSelectedTask_Click);
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
-            // btnDelete
+            // openToolStripMenuItem
             // 
-            this.btnDelete.Location = new System.Drawing.Point(201, 0);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(0);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(67, 26);
-            this.btnDelete.TabIndex = 3;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
-            // btnNewTask
+            // editToolStripMenuItem
             // 
-            this.btnNewTask.Location = new System.Drawing.Point(0, 0);
-            this.btnNewTask.Margin = new System.Windows.Forms.Padding(0);
-            this.btnNewTask.Name = "btnNewTask";
-            this.btnNewTask.Size = new System.Drawing.Size(67, 26);
-            this.btnNewTask.TabIndex = 0;
-            this.btnNewTask.Text = "New";
-            this.btnNewTask.UseVisualStyleBackColor = true;
-            this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
-            // btnCloseApp
+            // deleteToolStripMenuItem
             // 
-            this.btnCloseApp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCloseApp.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCloseApp.Location = new System.Drawing.Point(335, 0);
-            this.btnCloseApp.Margin = new System.Windows.Forms.Padding(0);
-            this.btnCloseApp.Name = "btnCloseApp";
-            this.btnCloseApp.Size = new System.Drawing.Size(67, 26);
-            this.btnCloseApp.TabIndex = 5;
-            this.btnCloseApp.Text = "Quit";
-            this.btnCloseApp.UseVisualStyleBackColor = true;
-            this.btnCloseApp.Click += new System.EventHandler(this.btnCloseApp_Click);
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // flowButtons
+            // closeToolStripMenuItem
             // 
-            this.flowButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowButtons.AutoScroll = true;
-            this.flowButtons.Controls.Add(this.btnNewTask);
-            this.flowButtons.Controls.Add(this.btnOpenSelectedTask);
-            this.flowButtons.Controls.Add(this.btnEditTask);
-            this.flowButtons.Controls.Add(this.btnDelete);
-            this.flowButtons.Controls.Add(this.btnCloseSelectedTab);
-            this.flowButtons.Controls.Add(this.btnCloseApp);
-            this.flowButtons.Location = new System.Drawing.Point(18, 11);
-            this.flowButtons.Name = "flowButtons";
-            this.flowButtons.Size = new System.Drawing.Size(590, 36);
-            this.flowButtons.TabIndex = 0;
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
-            // btnCloseSelectedTab
+            // quitToolStripMenuItem
             // 
-            this.btnCloseSelectedTab.Location = new System.Drawing.Point(268, 0);
-            this.btnCloseSelectedTab.Margin = new System.Windows.Forms.Padding(0);
-            this.btnCloseSelectedTab.Name = "btnCloseSelectedTab";
-            this.btnCloseSelectedTab.Size = new System.Drawing.Size(67, 26);
-            this.btnCloseSelectedTab.TabIndex = 4;
-            this.btnCloseSelectedTab.Text = "Close";
-            this.btnCloseSelectedTab.UseVisualStyleBackColor = true;
-            this.btnCloseSelectedTab.Click += new System.EventHandler(this.buttonCloseSelectedTab_Click);
+            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
+            this.quitToolStripMenuItem.Text = "Quit";
+            this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
             // TodoListMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 425);
-            this.Controls.Add(this.flowButtons);
             this.Controls.Add(this.tabs);
+            this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.RoyalBlue;
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "TodoListMainForm";
             this.Text = "TodoList";
@@ -193,8 +167,10 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TodoListMainForm_KeyDown);
             this.tabs.ResumeLayout(false);
             this.tabAllTasks.ResumeLayout(false);
-            this.flowButtons.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -202,14 +178,14 @@
 
         private System.Windows.Forms.TabControl tabs;
         private System.Windows.Forms.TabPage tabAllTasks;
-        private System.Windows.Forms.Button btnCloseApp;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnNewTask;
         private System.Windows.Forms.ListView listViewAllTasks;
-        private System.Windows.Forms.Button btnOpenSelectedTask;
-        private System.Windows.Forms.Button btnEditTask;
-        private System.Windows.Forms.FlowLayoutPanel flowButtons;
-        private System.Windows.Forms.Button btnCloseSelectedTab;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
     }
 }
 

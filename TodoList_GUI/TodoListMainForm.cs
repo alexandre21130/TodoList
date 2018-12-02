@@ -187,37 +187,37 @@ namespace TodoList_GUI
         {
             if(IsMainTabSelected()) //we are on the main tab
             {
-                btnCloseSelectedTab.Enabled = false;
+                closeToolStripMenuItem.Enabled = false;
                 int nbSelected = listViewAllTasks.SelectedItems.Count;
                 switch (nbSelected)
                 {
                     case 0:
-                        btnNewTask.Enabled = true;
-                        btnDelete.Enabled = false;
-                        btnOpenSelectedTask.Enabled = false;
-                        btnEditTask.Enabled = false;
+                        newToolStripMenuItem.Enabled = true;
+                        deleteToolStripMenuItem.Enabled = false;
+                        openToolStripMenuItem.Enabled = false;
+                        editToolStripMenuItem.Enabled = false;
                         break;
                     case 1:
-                        btnNewTask.Enabled = true;
-                        btnDelete.Enabled = true;
-                        btnOpenSelectedTask.Enabled = true;
-                        btnEditTask.Enabled = true;
+                        newToolStripMenuItem.Enabled = true;
+                        deleteToolStripMenuItem.Enabled = true;
+                        openToolStripMenuItem.Enabled = true;
+                        editToolStripMenuItem.Enabled = true;
                         break;
                     default: //multiselection
-                        btnNewTask.Enabled = true;
-                        btnDelete.Enabled = true;
-                        btnOpenSelectedTask.Enabled = true;
-                        btnEditTask.Enabled = false;
+                        newToolStripMenuItem.Enabled = true;
+                        deleteToolStripMenuItem.Enabled = true;
+                        openToolStripMenuItem.Enabled = true;
+                        editToolStripMenuItem.Enabled = false;
                         break;
                 }
             }
             else //we are on a specific task tab
             {
-                btnCloseSelectedTab.Enabled = true;
-                btnNewTask.Enabled = true;
-                btnDelete.Enabled = true;
-                btnOpenSelectedTask.Enabled = false;
-                btnEditTask.Enabled = true;
+                closeToolStripMenuItem.Enabled = true;
+                newToolStripMenuItem.Enabled = true;
+                deleteToolStripMenuItem.Enabled = true;
+                openToolStripMenuItem.Enabled = false;
+                editToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -742,6 +742,66 @@ namespace TodoList_GUI
 
             }
 
+        }
+
+        /// <summary>
+        /// Click on the menu New task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateNewTask();
+        }
+
+        /// <summary>
+        /// Click on the menu Open
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenSelectedTaskInANewTab();
+        }
+
+        /// <summary>
+        /// Click on the Edit menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditCurrentSelectedTask();
+        }
+
+        /// <summary>
+        /// Click on the menu Delete
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteCurrentSelectedTask();
+        }
+
+        /// <summary>
+        /// click on the menu Close current task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CloseSelectedTab();
+        }
+
+        /// <summary>
+        /// Click on the Menu Close application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CloseApplication();
         }
     }
 }
