@@ -91,7 +91,7 @@ namespace TodoList_GUI
             listViewAllTasks.BeginUpdate();
             listViewAllTasks.Items.Clear();
             listViewAllTasks.SelectedItems.Clear();
-            foreach(TaskToDo task in _allTasks.Tasks)
+            foreach (TaskToDo task in _allTasks.Tasks)
             {
                 ListViewItem newItem = new ListViewItem(task.Name);
                 newItem.Tag = task;
@@ -131,7 +131,7 @@ namespace TodoList_GUI
         {
             TryLoadTemplateFile();
             Boolean fileLoaded = TryLoadAllTasksFromFile();
-            if(!fileLoaded)
+            if (!fileLoaded)
             {
                 MessageBox.Show(String.Format("{0} doesn't exist, create a new empty collection of tasks", _saveFileName));
             }
@@ -170,7 +170,7 @@ namespace TodoList_GUI
             CreateNewTask();
         }
 
-        
+
         /// <summary>
         /// returns true if the main tab is currently selected, else returns false
         /// </summary>
@@ -185,37 +185,33 @@ namespace TodoList_GUI
         /// </summary>
         private void EnableButtonsAccordingSelectedTask()
         {
-            if(IsMainTabSelected()) //we are on the main tab
+            newToolStripMenuItem.Enabled = true; //button New is always enabled
+            quitToolStripMenuItem.Enabled = true; //button quit is always enabled
+
+            if (IsMainTabSelected()) //we are on the main tab
             {
                 closeToolStripMenuItem.Enabled = false;
+
                 int nbSelected = listViewAllTasks.SelectedItems.Count;
-                switch (nbSelected)
+                if (nbSelected == 1) //single selection
                 {
-                    case 0:
-                        newToolStripMenuItem.Enabled = true;
-                        deleteToolStripMenuItem.Enabled = false;
-                        openToolStripMenuItem.Enabled = false;
-                        editToolStripMenuItem.Enabled = false;
-                        break;
-                    case 1:
-                        newToolStripMenuItem.Enabled = true;
-                        deleteToolStripMenuItem.Enabled = true;
-                        openToolStripMenuItem.Enabled = true;
-                        editToolStripMenuItem.Enabled = true;
-                        break;
-                    default: //multiselection
-                        newToolStripMenuItem.Enabled = true;
-                        deleteToolStripMenuItem.Enabled = true;
-                        openToolStripMenuItem.Enabled = true;
-                        editToolStripMenuItem.Enabled = false;
-                        break;
+                    deleteToolStripMenuItem.Enabled = true;
+                    openToolStripMenuItem.Enabled = true;
+                    editToolStripMenuItem.Enabled = true;
+                    cxtMenuMainTab.Enabled = true;
+                }
+                else //no selection of multi selection
+                {
+                    deleteToolStripMenuItem.Enabled = false;
+                    openToolStripMenuItem.Enabled = false;
+                    editToolStripMenuItem.Enabled = false;
+                    cxtMenuMainTab.Enabled = false;
                 }
             }
             else //we are on a specific task tab
             {
                 closeToolStripMenuItem.Enabled = true;
-                newToolStripMenuItem.Enabled = true;
-                deleteToolStripMenuItem.Enabled = true;
+                deleteToolStripMenuItem.Enabled = false;
                 openToolStripMenuItem.Enabled = false;
                 editToolStripMenuItem.Enabled = true;
             }
@@ -230,7 +226,7 @@ namespace TodoList_GUI
         private TaskToDo GetCurrentSelectedTask()
         {
             TaskToDo result = null;
-            if(IsMainTabSelected())
+            if (IsMainTabSelected())
             {
                 if (listViewAllTasks.SelectedItems.Count == 1)
                     result = (TaskToDo)listViewAllTasks.SelectedItems[0].Tag;
@@ -239,7 +235,7 @@ namespace TodoList_GUI
             {
                 result = (TaskToDo)tabs.SelectedTab.Tag;
             }
-            
+
             return result;
         }
 
@@ -292,7 +288,7 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void btnOpenSelectedTask_Click(object sender, EventArgs e)
         {
-            OpenSelectedTaskInANewTab();  
+            OpenSelectedTaskInANewTab();
         }
 
         /// <summary>
@@ -304,11 +300,11 @@ namespace TodoList_GUI
         private TabPage FindTabByTask(TaskToDo taskToFind)
         {
             TabPage result = null;
-            for(int i=1; i<tabs.TabCount;i++)
+            for (int i = 1; i < tabs.TabCount; i++)
             {
                 TabPage currentPage = tabs.TabPages[i];
-                TaskToDo task = (TaskToDo) currentPage.Tag;
-                if(task == taskToFind)
+                TaskToDo task = (TaskToDo)currentPage.Tag;
+                if (task == taskToFind)
                 {
                     result = currentPage;
                     break;
@@ -370,10 +366,10 @@ namespace TodoList_GUI
             //get the selected task
             TaskToDo selectedTask = GetSelectedTaskInTreeView(tv);
             //do something according to the key that was pressed
-            switch(e.KeyCode)
+            switch (e.KeyCode)
             {
                 case Keys.Space: //spacebar => set the current selected task as completed or not completed
-                    if(selectedTask != null)
+                    if (selectedTask != null)
                     {
                         if (selectedTask.IsCompleted)
                             selectedTask.SetNotCompleted();
@@ -409,7 +405,7 @@ namespace TodoList_GUI
         {
             //update the presentation of the current node
             TaskToDo task = (TaskToDo)tn.Tag;
-            if(task.IsCompleted)
+            if (task.IsCompleted)
             {
                 tn.NodeFont = _fontForCompletedTasks;
                 tn.ForeColor = _colorForCompletedTasks;
@@ -432,8 +428,8 @@ namespace TodoList_GUI
         private void RefreshTaskTab(TabPage tabToRefresh, Boolean hardRefresh)
         {
             //get the treeview associated to the tab
-            TreeView treeView = (TreeView) (tabToRefresh.Controls["treeViewTask"]);
-            if(hardRefresh)
+            TreeView treeView = (TreeView)(tabToRefresh.Controls["treeViewTask"]);
+            if (hardRefresh)
             {
                 //get the task associated to the tab
                 TaskToDo task = (TaskToDo)tabToRefresh.Tag;
@@ -450,7 +446,7 @@ namespace TodoList_GUI
             {
                 Treeview_SoftRefresh(treeView);
             }
-            
+
         }
 
         /// <summary>
@@ -462,12 +458,12 @@ namespace TodoList_GUI
         private TreeNode FindNode(TreeNode rootNode, TaskToDo taskToFind)
         {
             TreeNode result = null;
-            TaskToDo currentTask = (TaskToDo) rootNode.Tag;
+            TaskToDo currentTask = (TaskToDo)rootNode.Tag;
             if (currentTask == taskToFind) //current node matches
                 result = rootNode;
             else //current node doesn't match, try with child nodes (recursive call)
             {
-                foreach(TreeNode subNode in rootNode.Nodes)
+                foreach (TreeNode subNode in rootNode.Nodes)
                 {
                     result = FindNode(subNode, taskToFind);
                     if (result != null)
@@ -499,7 +495,7 @@ namespace TodoList_GUI
         private TaskToDo GetSelectedTaskInTreeView(TreeView tv)
         {
             TaskToDo result = null;
-            if(tv.SelectedNode != null)
+            if (tv.SelectedNode != null)
             {
                 result = (TaskToDo)tv.SelectedNode.Tag;
             }
@@ -531,7 +527,7 @@ namespace TodoList_GUI
             //draw the node at current level
             node.Text = task.Name;
             node.Tag = task;
-            if(task.IsCompleted)
+            if (task.IsCompleted)
             {
                 node.ForeColor = _colorForCompletedTasks;
                 node.NodeFont = _fontForCompletedTasks;
@@ -542,7 +538,7 @@ namespace TodoList_GUI
                 node.NodeFont = _fontForNotCompletedTasks;
             }
             //draw each subtask
-            foreach(TaskToDo subtask in task.Subtasks)
+            foreach (TaskToDo subtask in task.Subtasks)
             {
                 TreeNode subNode = node.Nodes.Add(subtask.Name);
                 DrawTaskInTreeNodeRecursive(subNode, subtask);
@@ -592,7 +588,7 @@ namespace TodoList_GUI
         private Boolean TryLoadAllTasksFromFile()
         {
             Boolean fileLoaded = false;
-            if(File.Exists(_saveFileName))
+            if (File.Exists(_saveFileName))
             {
                 _allTasks.LoadFromFile(_saveFileName);
                 fileLoaded = true;
@@ -610,7 +606,7 @@ namespace TodoList_GUI
         {
             using (FormTaskEditor dlg = new FormTaskEditor(_templateTask))
             {
-                if(dlg.ShowDialog()== DialogResult.OK)
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     TaskToDo myTask = dlg.Task;
                     MessageBox.Show(myTask.Name);
@@ -710,7 +706,7 @@ namespace TodoList_GUI
             TaskToDo currentTask = GetCurrentSelectedTask();
             if (currentTask == null) //do nothing if there is no selected task
                 return;
-            switch(e.KeyCode)
+            switch (e.KeyCode)
             {
                 case Keys.Space:
                     OpenSelectedTaskInANewTab();
@@ -731,7 +727,7 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void TodoListMainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            switch(e.KeyCode)
+            switch (e.KeyCode)
             {
                 case Keys.Escape: //Escape => close the current tab if specific task, closes the application if mainTab
                     if (IsMainTabSelected())
@@ -802,6 +798,36 @@ namespace TodoList_GUI
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CloseApplication();
+        }
+
+        /// <summary>
+        /// Click on the context menu Main/Open
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuMainOpen_Click(object sender, EventArgs e)
+        {
+            OpenSelectedTaskInANewTab();
+        }
+
+        /// <summary>
+        /// Click on the context menu Main/Edit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuMainEdit_Click(object sender, EventArgs e)
+        {
+            EditCurrentSelectedTask();
+        }
+
+        /// <summary>
+        /// Click on the context menu Main/Delete
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuMainDelete_Click(object sender, EventArgs e)
+        {
+            DeleteCurrentSelectedTask();
         }
     }
 }

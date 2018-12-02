@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabAllTasks = new System.Windows.Forms.TabPage();
             this.listViewAllTasks = new System.Windows.Forms.ListView();
@@ -38,9 +39,14 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cxtMenuMainTab = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cxtMenuMainOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.cxtMenuMainEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.cxtMenuMainDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.tabs.SuspendLayout();
             this.tabAllTasks.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.cxtMenuMainTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
@@ -75,6 +81,7 @@
             this.listViewAllTasks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewAllTasks.ContextMenuStrip = this.cxtMenuMainTab;
             this.listViewAllTasks.FullRowSelect = true;
             this.listViewAllTasks.GridLines = true;
             this.listViewAllTasks.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
@@ -149,6 +156,36 @@
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
+            // cxtMenuMainTab
+            // 
+            this.cxtMenuMainTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cxtMenuMainOpen,
+            this.cxtMenuMainEdit,
+            this.cxtMenuMainDelete});
+            this.cxtMenuMainTab.Name = "cxtMenuMainTab";
+            this.cxtMenuMainTab.Size = new System.Drawing.Size(108, 70);
+            // 
+            // cxtMenuMainOpen
+            // 
+            this.cxtMenuMainOpen.Name = "cxtMenuMainOpen";
+            this.cxtMenuMainOpen.Size = new System.Drawing.Size(152, 22);
+            this.cxtMenuMainOpen.Text = "Open";
+            this.cxtMenuMainOpen.Click += new System.EventHandler(this.cxtMenuMainOpen_Click);
+            // 
+            // cxtMenuMainEdit
+            // 
+            this.cxtMenuMainEdit.Name = "cxtMenuMainEdit";
+            this.cxtMenuMainEdit.Size = new System.Drawing.Size(152, 22);
+            this.cxtMenuMainEdit.Text = "Edit";
+            this.cxtMenuMainEdit.Click += new System.EventHandler(this.cxtMenuMainEdit_Click);
+            // 
+            // cxtMenuMainDelete
+            // 
+            this.cxtMenuMainDelete.Name = "cxtMenuMainDelete";
+            this.cxtMenuMainDelete.Size = new System.Drawing.Size(152, 22);
+            this.cxtMenuMainDelete.Text = "Delete";
+            this.cxtMenuMainDelete.Click += new System.EventHandler(this.cxtMenuMainDelete_Click);
+            // 
             // TodoListMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -169,6 +206,7 @@
             this.tabAllTasks.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.cxtMenuMainTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,6 +224,10 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cxtMenuMainTab;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuMainOpen;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuMainEdit;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuMainDelete;
     }
 }
 
