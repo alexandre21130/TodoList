@@ -328,6 +328,7 @@ namespace TodoList_GUI
                 newTab = new TabPage(task.Name);
                 TreeView treeView = new TreeView();
                 treeView.Name = "treeViewTask";
+                treeView.ContextMenuStrip = cxtMenuTaskTab;
                 treeView.KeyDown += TreeView_KeyDown;
                 newTab.Controls.Add(treeView);
                 treeView.Dock = DockStyle.Fill;
@@ -828,6 +829,50 @@ namespace TodoList_GUI
         private void cxtMenuMainDelete_Click(object sender, EventArgs e)
         {
             DeleteCurrentSelectedTask();
+        }
+
+        /// <summary>
+        /// Click on the context menu Task / Edit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuTaskEdit_Click(object sender, EventArgs e)
+        {
+            EditCurrentSelectedTask();
+        }
+
+        /// <summary>
+        /// click on the context menu Task / Set completed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuTaskSetCompleted_Click(object sender, EventArgs e)
+        {
+            TreeView tv = (TreeView)tabs.SelectedTab.Controls["treeViewTask"];
+            TaskToDo currentTask = GetSelectedTaskInTreeView(tv);
+            if (currentTask == null)
+                return;
+            currentTask.SetCompleted();
+            SaveAllTasksToFile();
+            RefreshCurrentTaskTab();
+            RefreshListOfTasks(GetCurrentSelectedTask());
+        }
+
+        /// <summary>
+        /// click on the context menu Task / Reset
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuTaskSetNotCompleted_Click(object sender, EventArgs e)
+        {
+            TreeView tv = (TreeView)tabs.SelectedTab.Controls["treeViewTask"];
+            TaskToDo currentTask = GetSelectedTaskInTreeView(tv);
+            if (currentTask == null)
+                return;
+            currentTask.SetNotCompleted();
+            SaveAllTasksToFile();
+            RefreshCurrentTaskTab();
+            RefreshListOfTasks(GetCurrentSelectedTask());
         }
     }
 }

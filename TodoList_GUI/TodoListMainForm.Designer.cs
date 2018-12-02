@@ -43,10 +43,15 @@
             this.cxtMenuMainOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.cxtMenuMainEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.cxtMenuMainDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.cxtMenuTaskTab = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cxtMenuTaskEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.cxtMenuTaskSetCompleted = new System.Windows.Forms.ToolStripMenuItem();
+            this.cxtMenuTaskSetNotCompleted = new System.Windows.Forms.ToolStripMenuItem();
             this.tabs.SuspendLayout();
             this.tabAllTasks.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.cxtMenuMainTab.SuspendLayout();
+            this.cxtMenuTaskTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
@@ -168,23 +173,53 @@
             // cxtMenuMainOpen
             // 
             this.cxtMenuMainOpen.Name = "cxtMenuMainOpen";
-            this.cxtMenuMainOpen.Size = new System.Drawing.Size(152, 22);
+            this.cxtMenuMainOpen.Size = new System.Drawing.Size(107, 22);
             this.cxtMenuMainOpen.Text = "Open";
             this.cxtMenuMainOpen.Click += new System.EventHandler(this.cxtMenuMainOpen_Click);
             // 
             // cxtMenuMainEdit
             // 
             this.cxtMenuMainEdit.Name = "cxtMenuMainEdit";
-            this.cxtMenuMainEdit.Size = new System.Drawing.Size(152, 22);
+            this.cxtMenuMainEdit.Size = new System.Drawing.Size(107, 22);
             this.cxtMenuMainEdit.Text = "Edit";
             this.cxtMenuMainEdit.Click += new System.EventHandler(this.cxtMenuMainEdit_Click);
             // 
             // cxtMenuMainDelete
             // 
             this.cxtMenuMainDelete.Name = "cxtMenuMainDelete";
-            this.cxtMenuMainDelete.Size = new System.Drawing.Size(152, 22);
+            this.cxtMenuMainDelete.Size = new System.Drawing.Size(107, 22);
             this.cxtMenuMainDelete.Text = "Delete";
             this.cxtMenuMainDelete.Click += new System.EventHandler(this.cxtMenuMainDelete_Click);
+            // 
+            // cxtMenuTaskTab
+            // 
+            this.cxtMenuTaskTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cxtMenuTaskEdit,
+            this.cxtMenuTaskSetCompleted,
+            this.cxtMenuTaskSetNotCompleted});
+            this.cxtMenuTaskTab.Name = "cxtMenuTaskTab";
+            this.cxtMenuTaskTab.Size = new System.Drawing.Size(198, 92);
+            // 
+            // cxtMenuTaskEdit
+            // 
+            this.cxtMenuTaskEdit.Name = "cxtMenuTaskEdit";
+            this.cxtMenuTaskEdit.Size = new System.Drawing.Size(197, 22);
+            this.cxtMenuTaskEdit.Text = "Switch to edition mode";
+            this.cxtMenuTaskEdit.Click += new System.EventHandler(this.cxtMenuTaskEdit_Click);
+            // 
+            // cxtMenuTaskSetCompleted
+            // 
+            this.cxtMenuTaskSetCompleted.Name = "cxtMenuTaskSetCompleted";
+            this.cxtMenuTaskSetCompleted.Size = new System.Drawing.Size(197, 22);
+            this.cxtMenuTaskSetCompleted.Text = "Set completed";
+            this.cxtMenuTaskSetCompleted.Click += new System.EventHandler(this.cxtMenuTaskSetCompleted_Click);
+            // 
+            // cxtMenuTaskSetNotCompleted
+            // 
+            this.cxtMenuTaskSetNotCompleted.Name = "cxtMenuTaskSetNotCompleted";
+            this.cxtMenuTaskSetNotCompleted.Size = new System.Drawing.Size(197, 22);
+            this.cxtMenuTaskSetNotCompleted.Text = "Reset (not completed)";
+            this.cxtMenuTaskSetNotCompleted.Click += new System.EventHandler(this.cxtMenuTaskSetNotCompleted_Click);
             // 
             // TodoListMainForm
             // 
@@ -207,6 +242,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.cxtMenuMainTab.ResumeLayout(false);
+            this.cxtMenuTaskTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -228,6 +264,10 @@
         private System.Windows.Forms.ToolStripMenuItem cxtMenuMainOpen;
         private System.Windows.Forms.ToolStripMenuItem cxtMenuMainEdit;
         private System.Windows.Forms.ToolStripMenuItem cxtMenuMainDelete;
+        private System.Windows.Forms.ContextMenuStrip cxtMenuTaskTab;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuTaskEdit;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuTaskSetCompleted;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuTaskSetNotCompleted;
     }
 }
 
