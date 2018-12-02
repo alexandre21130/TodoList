@@ -24,6 +24,7 @@ namespace TodoList_GUI
         private Font _fontForNotCompletedTasks;
         Color _colorForCompletedTasks;
         Color _colorForNotCompletedTasks;
+        Color _colorForTasksInProgress;
 
 
         /// <summary>
@@ -39,6 +40,8 @@ namespace TodoList_GUI
             _fontForNotCompletedTasks = new Font(this.Font, FontStyle.Regular);
             _colorForCompletedTasks = Color.DarkGreen;
             _colorForNotCompletedTasks = this.ForeColor;
+            _colorForTasksInProgress = Color.DarkOrange;
+
         }
 
         /// <summary>
@@ -66,7 +69,6 @@ namespace TodoList_GUI
         private void CloseApplication()
         {
             this.Close(); //closes the main form, quits the application 
-
         }
 
 
@@ -93,6 +95,23 @@ namespace TodoList_GUI
             {
                 ListViewItem newItem = new ListViewItem(task.Name);
                 newItem.Tag = task;
+                TaskProgression progression = task.Progression;
+                if (progression.IsCompleted)
+                {
+                    newItem.ForeColor = _colorForCompletedTasks;
+                    newItem.Font = _fontForCompletedTasks;
+                }
+                else if (progression.HasBegun)
+                {
+                    newItem.ForeColor = _colorForTasksInProgress;
+                    newItem.Font = _fontForNotCompletedTasks;
+                }
+                else
+                {
+                    newItem.ForeColor = _colorForNotCompletedTasks;
+                    newItem.Font = _fontForNotCompletedTasks;
+                }
+
                 listViewAllTasks.Items.Add(newItem);
                 if (task == taskToSelect)
                     newItem.Selected = true;
@@ -363,6 +382,7 @@ namespace TodoList_GUI
 
                         RefreshCurrentTaskTab();
                         SaveAllTasksToFile();
+                        RefreshListOfTasks(GetCurrentSelectedTask());
                     }
                     break;
                 case Keys.F2: //F2 => switch to edit mode

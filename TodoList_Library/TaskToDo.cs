@@ -119,7 +119,10 @@ namespace TodoList_Library
                 return _subtasks.Find(x => !x.IsCompleted) == null; //all subtasks are completed if we cannot find any subtask that is not completed
         }
 
-        
+        /// <summary>
+        /// Gets the task progression
+        /// </summary>
+        public TaskProgression Progression { get { return new TaskProgression(this); } }
 
 
         /// <summary>
@@ -183,6 +186,8 @@ namespace TodoList_Library
                 RefreshCompletedStatus(true); //refresh the completed status of current task and all its parents
             }
         }
+
+        
 
 
     } //end of the class
