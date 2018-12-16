@@ -36,7 +36,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(397, 375);
+            this.btnOK.Location = new System.Drawing.Point(416, 441);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(82, 25);
             this.btnOK.TabIndex = 1;
@@ -48,7 +48,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(485, 375);
+            this.btnCancel.Location = new System.Drawing.Point(504, 441);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(82, 25);
             this.btnCancel.TabIndex = 2;
@@ -66,7 +66,7 @@
             this.txtTask.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTask.Location = new System.Drawing.Point(12, 12);
             this.txtTask.Name = "txtTask";
-            this.txtTask.Size = new System.Drawing.Size(555, 357);
+            this.txtTask.Size = new System.Drawing.Size(574, 423);
             this.txtTask.TabIndex = 0;
             this.txtTask.Text = "";
             this.txtTask.WordWrap = false;
@@ -77,7 +77,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(579, 412);
+            this.ClientSize = new System.Drawing.Size(598, 478);
             this.Controls.Add(this.txtTask);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);

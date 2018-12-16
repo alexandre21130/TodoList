@@ -140,7 +140,7 @@ namespace TodoList_Library
                 foreach (String line in lines)
                     strToWrite.AppendLine(new string('\t', indentationLevel + 1) + line);
             }
-            strToWrite.AppendLine(); //append a blank line to separate each task / subtask
+            
             //write subtasks
             foreach(TaskToDo subtask in task.Subtasks)
             {
