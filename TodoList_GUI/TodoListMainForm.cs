@@ -119,6 +119,7 @@ namespace TodoList_GUI
             listViewAllTasks.EndUpdate();
             listViewAllTasks.Focus();
             EnableButtonsAccordingSelectedTask();
+            RefreshDescription();
         }
 
 
@@ -137,6 +138,7 @@ namespace TodoList_GUI
             }
             RefreshListOfTasks(null);
             EnableButtonsAccordingSelectedTask();
+            RefreshDescription();
         }
 
         /// <summary>
@@ -247,6 +249,7 @@ namespace TodoList_GUI
         private void listViewAllTasks_SelectedIndexChanged(object sender, EventArgs e)
         {
             EnableButtonsAccordingSelectedTask();
+            RefreshDescription();
         }
 
         /// <summary>
@@ -330,6 +333,7 @@ namespace TodoList_GUI
                 treeView.Name = "treeViewTask";
                 treeView.ContextMenuStrip = cxtMenuTaskTab;
                 treeView.KeyDown += TreeView_KeyDown;
+                treeView.AfterSelect += TreeView_AfterSelect;
                 newTab.Controls.Add(treeView);
                 treeView.Dock = DockStyle.Fill;
                 //link the tab to the task
@@ -341,6 +345,16 @@ namespace TodoList_GUI
 
             //switch to the new tab
             tabs.SelectedTab = newTab;
+        }
+
+        /// <summary>
+        /// occurs when the selected node changed in treeview of a given task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            RefreshDescription();
         }
 
         /// <summary>
@@ -649,6 +663,23 @@ namespace TodoList_GUI
         }
 
         /// <summary>
+        /// refresh the description textbox according to the task that is selected
+        /// </summary>
+        private void RefreshDescription()
+        {
+            TaskToDo selectedTask = null;
+            if(IsMainTabSelected())
+            {
+                selectedTask = GetCurrentSelectedTask();
+            }
+            else
+            {
+                selectedTask = GetSelectedTaskInTreeView(GetCurrentTreeView());
+            }
+            txtDescription.Text = selectedTask != null ? selectedTask.Description + Environment.NewLine : String.Empty;
+        }
+
+        /// <summary>
         /// click on the button Edit current task
         /// </summary>
         /// <param name="sender"></param>
@@ -676,6 +707,7 @@ namespace TodoList_GUI
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
             EnableButtonsAccordingSelectedTask();
+            RefreshDescription();
         }
 
         /// <summary>
@@ -841,6 +873,20 @@ namespace TodoList_GUI
             EditCurrentSelectedTask();
         }
 
+
+
+        /// <summary>
+        /// Get the treeview of current selected tab (null if we are on the main tab)
+        /// </summary>
+        /// <returns></returns>
+        private TreeView GetCurrentTreeView()
+        {
+            TreeView result = null;
+            if(!IsMainTabSelected())
+                result = (TreeView)tabs.SelectedTab.Controls["treeViewTask"];
+            return result;
+        }
+
         /// <summary>
         /// click on the context menu Task / Set completed
         /// </summary>
@@ -848,7 +894,7 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void cxtMenuTaskSetCompleted_Click(object sender, EventArgs e)
         {
-            TreeView tv = (TreeView)tabs.SelectedTab.Controls["treeViewTask"];
+            TreeView tv = GetCurrentTreeView();
             TaskToDo currentTask = GetSelectedTaskInTreeView(tv);
             if (currentTask == null)
                 return;
@@ -865,7 +911,7 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void cxtMenuTaskSetNotCompleted_Click(object sender, EventArgs e)
         {
-            TreeView tv = (TreeView)tabs.SelectedTab.Controls["treeViewTask"];
+            TreeView tv = GetCurrentTreeView();
             TaskToDo currentTask = GetSelectedTaskInTreeView(tv);
             if (currentTask == null)
                 return;

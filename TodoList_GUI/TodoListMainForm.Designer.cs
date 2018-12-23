@@ -48,11 +48,18 @@
             this.cxtMenuTaskEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.cxtMenuTaskSetCompleted = new System.Windows.Forms.ToolStripMenuItem();
             this.cxtMenuTaskSetNotCompleted = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtDescription = new System.Windows.Forms.RichTextBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabs.SuspendLayout();
             this.tabAllTasks.SuspendLayout();
             this.cxtMenuMainTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.cxtMenuTaskTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
@@ -61,11 +68,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabs.Controls.Add(this.tabAllTasks);
-            this.tabs.Location = new System.Drawing.Point(14, 28);
+            this.tabs.Location = new System.Drawing.Point(6, 4);
             this.tabs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(598, 386);
+            this.tabs.Size = new System.Drawing.Size(591, 253);
             this.tabs.TabIndex = 1;
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_SelectedIndexChanged);
             this.tabs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tabs_MouseDoubleClick);
@@ -77,7 +84,7 @@
             this.tabAllTasks.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabAllTasks.Name = "tabAllTasks";
             this.tabAllTasks.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabAllTasks.Size = new System.Drawing.Size(590, 357);
+            this.tabAllTasks.Size = new System.Drawing.Size(583, 224);
             this.tabAllTasks.TabIndex = 0;
             this.tabAllTasks.Text = "All tasks";
             this.tabAllTasks.UseVisualStyleBackColor = true;
@@ -93,11 +100,11 @@
             this.listViewAllTasks.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listViewAllTasks.HideSelection = false;
             this.listViewAllTasks.LabelWrap = false;
-            this.listViewAllTasks.Location = new System.Drawing.Point(7, 7);
+            this.listViewAllTasks.Location = new System.Drawing.Point(6, 8);
             this.listViewAllTasks.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listViewAllTasks.MultiSelect = false;
             this.listViewAllTasks.Name = "listViewAllTasks";
-            this.listViewAllTasks.Size = new System.Drawing.Size(575, 335);
+            this.listViewAllTasks.Size = new System.Drawing.Size(571, 208);
             this.listViewAllTasks.TabIndex = 0;
             this.listViewAllTasks.UseCompatibleStateImageBehavior = false;
             this.listViewAllTasks.View = System.Windows.Forms.View.List;
@@ -222,12 +229,55 @@
             this.cxtMenuTaskSetNotCompleted.Text = "Reset (not completed)";
             this.cxtMenuTaskSetNotCompleted.Click += new System.EventHandler(this.cxtMenuTaskSetNotCompleted_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 16);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Description";
+            // 
+            // txtDescription
+            // 
+            this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDescription.Location = new System.Drawing.Point(3, 28);
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.ReadOnly = true;
+            this.txtDescription.Size = new System.Drawing.Size(594, 90);
+            this.txtDescription.TabIndex = 2;
+            this.txtDescription.Text = "";
+            this.txtDescription.WordWrap = false;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(12, 27);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.tabs);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
+            this.splitContainer1.Panel2.Controls.Add(this.txtDescription);
+            this.splitContainer1.Size = new System.Drawing.Size(600, 386);
+            this.splitContainer1.SplitterDistance = 261;
+            this.splitContainer1.TabIndex = 3;
+            // 
             // TodoListMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 425);
-            this.Controls.Add(this.tabs);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.RoyalBlue;
@@ -245,6 +295,11 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.cxtMenuTaskTab.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,6 +325,9 @@
         private System.Windows.Forms.ToolStripMenuItem cxtMenuTaskEdit;
         private System.Windows.Forms.ToolStripMenuItem cxtMenuTaskSetCompleted;
         private System.Windows.Forms.ToolStripMenuItem cxtMenuTaskSetNotCompleted;
+        private System.Windows.Forms.RichTextBox txtDescription;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
 

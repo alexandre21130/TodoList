@@ -18,7 +18,7 @@ namespace TodoList_Library
         /// <returns></returns>
         public static String[] SplitLines(this String str, Boolean removeEmptyEntries)
         {
-            char[] separators = { '\n', '\r' };
+            string[] separators = { Environment.NewLine, "\r", "\n" };
             return str.Split(separators, removeEmptyEntries ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
         }
 

@@ -139,6 +139,8 @@ namespace TodoList_Library
                 String[] lines = task.Description.SplitLines(false);
                 foreach (String line in lines)
                     strToWrite.AppendLine(new string('\t', indentationLevel + 1) + line);
+                //add a blank line beetween description and subtasks
+                strToWrite.AppendLine();
             }
             
             //write subtasks
