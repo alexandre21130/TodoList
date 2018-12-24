@@ -187,7 +187,71 @@ namespace TodoList_Library
             }
         }
 
-        
+        /// <summary>
+        /// returns the taskTodo that is just before the current task at the same level
+        /// returns null if there is no previous brother 
+        /// </summary>
+        /// <returns></returns>
+        public TaskToDo PreviousBrother()
+        {
+            TaskToDo result = null;
+            if(_parentTask != null)
+            {
+                int currentIndex = _parentTask._subtasks.IndexOf(this);
+                if (currentIndex > 0)
+                    result = _parentTask._subtasks[currentIndex - 1];
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// returns the taskTodo that is just after the current task at the same level
+        /// returns null if there is no next brother 
+        /// </summary>
+        /// <returns></returns>
+        public TaskToDo NextBrother()
+        {
+            TaskToDo result = null;
+            if (_parentTask != null)
+            {
+                int currentIndex = _parentTask._subtasks.IndexOf(this);
+                if (currentIndex < (_parentTask._subtasks.Count - 1))
+                    result = _parentTask._subtasks[currentIndex + 1];
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// move up the current task (switch it with its previous brother)
+        /// </summary>
+        public void MoveUp()
+        {
+            if(_parentTask != null)
+            {
+                Int32 index = _parentTask._subtasks.IndexOf(this);
+                if(index > 0) //there is a "previous brother" so we can switch our place with it
+                {
+                    _parentTask._subtasks.RemoveAt(index); //remove this
+                    _parentTask._subtasks.Insert(index - 1, this); //and reinsert it one case before
+                }
+            } 
+        }
+
+        /// <summary>
+        /// move down the current task (switch it with its next brother)
+        /// </summary>
+        public void MoveDown()
+        {
+            if (_parentTask != null)
+            {
+                Int32 index = _parentTask._subtasks.IndexOf(this);
+                if (index < (_parentTask._subtasks.Count -1)) //there is a "next brother" so we can switch our place with it
+                {
+                    _parentTask._subtasks.RemoveAt(index); //remove original
+                    _parentTask._subtasks.Insert(index + 1, this); //Copy current subtask one case after
+                }
+            }
+        }
 
 
     } //end of the class

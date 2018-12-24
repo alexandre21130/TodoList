@@ -55,6 +55,8 @@
             this.cxtMenuTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnMoveTaskUp = new System.Windows.Forms.Button();
+            this.btnMoveTaskDown = new System.Windows.Forms.Button();
             this.tabs.SuspendLayout();
             this.tabAllTasks.SuspendLayout();
             this.cxtMenuMainTab.SuspendLayout();
@@ -77,7 +79,7 @@
             this.tabs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(591, 253);
+            this.tabs.Size = new System.Drawing.Size(624, 253);
             this.tabs.TabIndex = 1;
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_SelectedIndexChanged);
             this.tabs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tabs_MouseDoubleClick);
@@ -89,7 +91,7 @@
             this.tabAllTasks.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabAllTasks.Name = "tabAllTasks";
             this.tabAllTasks.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabAllTasks.Size = new System.Drawing.Size(583, 224);
+            this.tabAllTasks.Size = new System.Drawing.Size(616, 224);
             this.tabAllTasks.TabIndex = 0;
             this.tabAllTasks.Text = "All tasks";
             this.tabAllTasks.UseVisualStyleBackColor = true;
@@ -109,7 +111,7 @@
             this.listViewAllTasks.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listViewAllTasks.MultiSelect = false;
             this.listViewAllTasks.Name = "listViewAllTasks";
-            this.listViewAllTasks.Size = new System.Drawing.Size(571, 211);
+            this.listViewAllTasks.Size = new System.Drawing.Size(604, 214);
             this.listViewAllTasks.TabIndex = 0;
             this.listViewAllTasks.UseCompatibleStateImageBehavior = false;
             this.listViewAllTasks.View = System.Windows.Forms.View.List;
@@ -158,7 +160,7 @@
             this.quitToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(624, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(750, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -251,7 +253,7 @@
             this.txtDescription.Location = new System.Drawing.Point(3, 28);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ReadOnly = true;
-            this.txtDescription.Size = new System.Drawing.Size(594, 90);
+            this.txtDescription.Size = new System.Drawing.Size(627, 90);
             this.txtDescription.TabIndex = 2;
             this.txtDescription.Text = "";
             this.txtDescription.WordWrap = false;
@@ -273,7 +275,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.txtDescription);
-            this.splitContainer1.Size = new System.Drawing.Size(600, 386);
+            this.splitContainer1.Size = new System.Drawing.Size(633, 386);
             this.splitContainer1.SplitterDistance = 261;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -309,11 +311,37 @@
             this.quitToolStripMenuItem1.Text = "Quit";
             this.quitToolStripMenuItem1.Click += new System.EventHandler(this.quitToolStripMenuItem1_Click);
             // 
+            // btnMoveTaskUp
+            // 
+            this.btnMoveTaskUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveTaskUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMoveTaskUp.Location = new System.Drawing.Point(651, 129);
+            this.btnMoveTaskUp.Name = "btnMoveTaskUp";
+            this.btnMoveTaskUp.Size = new System.Drawing.Size(87, 40);
+            this.btnMoveTaskUp.TabIndex = 4;
+            this.btnMoveTaskUp.Text = "Move Up";
+            this.btnMoveTaskUp.UseVisualStyleBackColor = true;
+            this.btnMoveTaskUp.Click += new System.EventHandler(this.btnMoveTaskUp_Click);
+            // 
+            // btnMoveTaskDown
+            // 
+            this.btnMoveTaskDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveTaskDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMoveTaskDown.Location = new System.Drawing.Point(651, 198);
+            this.btnMoveTaskDown.Name = "btnMoveTaskDown";
+            this.btnMoveTaskDown.Size = new System.Drawing.Size(87, 40);
+            this.btnMoveTaskDown.TabIndex = 4;
+            this.btnMoveTaskDown.Text = "Move Down";
+            this.btnMoveTaskDown.UseVisualStyleBackColor = true;
+            this.btnMoveTaskDown.Click += new System.EventHandler(this.btnMoveTaskDown_Click);
+            // 
             // TodoListMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 425);
+            this.ClientSize = new System.Drawing.Size(750, 425);
+            this.Controls.Add(this.btnMoveTaskDown);
+            this.Controls.Add(this.btnMoveTaskUp);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -371,6 +399,8 @@
         private System.Windows.Forms.ContextMenuStrip cxtMenuTrayIcon;
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem1;
+        private System.Windows.Forms.Button btnMoveTaskUp;
+        private System.Windows.Forms.Button btnMoveTaskDown;
     }
 }
 
