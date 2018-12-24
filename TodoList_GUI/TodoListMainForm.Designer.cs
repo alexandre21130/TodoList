@@ -51,6 +51,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtDescription = new System.Windows.Forms.RichTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.cxtMenuTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.quitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabs.SuspendLayout();
             this.tabAllTasks.SuspendLayout();
             this.cxtMenuMainTab.SuspendLayout();
@@ -60,6 +64,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.cxtMenuTrayIcon.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabs
@@ -104,7 +109,7 @@
             this.listViewAllTasks.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listViewAllTasks.MultiSelect = false;
             this.listViewAllTasks.Name = "listViewAllTasks";
-            this.listViewAllTasks.Size = new System.Drawing.Size(571, 208);
+            this.listViewAllTasks.Size = new System.Drawing.Size(571, 211);
             this.listViewAllTasks.TabIndex = 0;
             this.listViewAllTasks.UseCompatibleStateImageBehavior = false;
             this.listViewAllTasks.View = System.Windows.Forms.View.List;
@@ -272,6 +277,38 @@
             this.splitContainer1.SplitterDistance = 261;
             this.splitContainer1.TabIndex = 3;
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon1.BalloonTipText = "TodoList minimized";
+            this.notifyIcon1.BalloonTipTitle = "Todolist";
+            this.notifyIcon1.ContextMenuStrip = this.cxtMenuTrayIcon;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "TodoList";
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
+            // cxtMenuTrayIcon
+            // 
+            this.cxtMenuTrayIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showToolStripMenuItem,
+            this.quitToolStripMenuItem1});
+            this.cxtMenuTrayIcon.Name = "cxtMenuTrayIcon";
+            this.cxtMenuTrayIcon.Size = new System.Drawing.Size(104, 48);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.showToolStripMenuItem.Text = "Show";
+            this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // quitToolStripMenuItem1
+            // 
+            this.quitToolStripMenuItem1.Name = "quitToolStripMenuItem1";
+            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(103, 22);
+            this.quitToolStripMenuItem1.Text = "Quit";
+            this.quitToolStripMenuItem1.Click += new System.EventHandler(this.quitToolStripMenuItem1_Click);
+            // 
             // TodoListMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -289,6 +326,7 @@
             this.Text = "TodoList";
             this.Load += new System.EventHandler(this.TodoListMainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TodoListMainForm_KeyDown);
+            this.Resize += new System.EventHandler(this.TodoListMainForm_Resize);
             this.tabs.ResumeLayout(false);
             this.tabAllTasks.ResumeLayout(false);
             this.cxtMenuMainTab.ResumeLayout(false);
@@ -300,6 +338,7 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.cxtMenuTrayIcon.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -328,6 +367,10 @@
         private System.Windows.Forms.RichTextBox txtDescription;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ContextMenuStrip cxtMenuTrayIcon;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem1;
     }
 }
 

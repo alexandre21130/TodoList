@@ -920,5 +920,67 @@ namespace TodoList_GUI
             RefreshCurrentTaskTab();
             RefreshListOfTasks(GetCurrentSelectedTask());
         }
+
+        /// <summary>
+        /// occurs when the form is resized
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TodoListMainForm_Resize(object sender, EventArgs e)
+        {
+            if(this.WindowState == FormWindowState.Minimized)
+            {
+                MinimizeToTray();
+            }
+        }
+
+        /// <summary>
+        /// minimizes the window to the tray (notify icon)
+        /// </summary>
+        private void MinimizeToTray()
+        {
+            this.Hide();
+            notifyIcon1.Visible = true;
+        }
+
+        /// <summary>
+        /// Restore the main windows when it is minimized to tray
+        /// </summary>
+        private void MaximizeFromTray()
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon1.Visible = false;
+        }
+
+        /// <summary>
+        /// double click on the notify tray icon
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            MaximizeFromTray();
+        }
+
+        /// <summary>
+        /// click on the tray context menu to show the main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MaximizeFromTray();
+        }
+
+        /// <summary>
+        /// Click on the  tray context menu to quit the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            CloseApplication();
+        }
     }
 }
