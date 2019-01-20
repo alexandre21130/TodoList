@@ -1,1 +1,1 @@
-LaTODOLIST estpour le moment intégrée dans le logiciel (elle sert de tache d'essai).
+La TODOLIST est pour le moment intégrée dans le logiciel (elle sert de tache d'essai).

@@ -253,6 +253,23 @@ namespace TodoList_Library
             }
         }
 
+        /// <summary>
+        /// returns true if the task can be moved up (ie it has a previous brother)
+        /// </summary>
+        /// <returns></returns>
+        public Boolean CanMoveUp()
+        {
+            return PreviousBrother() != null;
+        }
+
+        /// <summary>
+        /// returns true if the task can be moved down (ie it has a next brother)
+        /// </summary>
+        /// <returns></returns>
+        public Boolean CanMoveDown()
+        {
+            return NextBrother() != null;
+        }
 
     } //end of the class
 
