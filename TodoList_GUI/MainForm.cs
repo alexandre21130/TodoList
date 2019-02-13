@@ -185,11 +185,11 @@ namespace TodoList_GUI
             Boolean setCompleted,
             Boolean setNotCompleted)
         {
-            btnNewTask.Enabled = newTask;
-            btnEditTask.Enabled = editTask;
-            btnDeleteTask.Enabled = deleteTask;
-            //TODO : handle move up task
-            //TODO : handle move down task
+            btnNewTask.Enabled = cxtMenuListOfTasksNew.Enabled = newTask;
+            btnEditTask.Enabled = cxtMenuListOfTasksEdit.Enabled = editTask;
+            btnDeleteTask.Enabled = cxtMenuListOfTasksDelete.Enabled = deleteTask;
+            cxtMenuListOfTasksMoveUp.Enabled = moveUpTask;
+            cxtMenuListOfTasksMoveDown.Enabled = moveDownTask;
             cxtMenuCurrentTaskDeleteSubtask.Enabled = deleteSubtask;
             cxtMenuCurrentTaskMoveUp.Enabled = moveUpSubtask;
             cxtMenuCurrentTaskMoveDown.Enabled = moveDownSubtask;
@@ -397,6 +397,10 @@ namespace TodoList_GUI
                     break;
                 case Keys.Delete:
                     _controler.DeleteSelectedTask();
+                    break;
+                case Keys.N: //Ctrl + N => New task
+                    if (e.Control)
+                        _controler.CreateNewTask();
                     break;
             }
         }
@@ -607,6 +611,56 @@ namespace TodoList_GUI
         private void cxtMenuCurrentTaskEdit_Click(object sender, EventArgs e)
         {
             _controler.EditCurrentTask();
+        }
+
+        /// <summary>
+        /// context menu New over list of tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuListOfTasksNew_Click(object sender, EventArgs e)
+        {
+            _controler.CreateNewTask();
+        }
+
+        /// <summary>
+        /// context menu Edit over list of tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuListOfTasksEdit_Click(object sender, EventArgs e)
+        {
+            _controler.EditCurrentTask();
+        }
+
+        /// <summary>
+        /// context menu "Delete" over list of tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuListOfTasksDelete_Click(object sender, EventArgs e)
+        {
+            _controler.DeleteSelectedTask();
+        }
+
+        /// <summary>
+        /// context menu "Move up" over list of tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuListOfTasksMoveUp_Click(object sender, EventArgs e)
+        {
+            //TODO : to handle
+        }
+
+        /// <summary>
+        /// context menu "Move down" over list of tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuListOfTasksMoveDown_Click(object sender, EventArgs e)
+        {
+            //TODO : to handle
         }
     }
 }

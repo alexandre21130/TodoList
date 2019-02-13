@@ -347,6 +347,8 @@ namespace TodoList_GUI
             RefreshGui(refresher);
         }
 
+        
+
         /// <summary>
         /// Changes the filter that is applied on subtasks
         /// </summary>

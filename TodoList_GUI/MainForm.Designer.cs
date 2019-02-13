@@ -50,6 +50,12 @@
             this.btnDeleteTask = new System.Windows.Forms.Button();
             this.checkHideCompletedSubtasks = new System.Windows.Forms.CheckBox();
             this.cxtMenuCurrentTaskEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuListOfTasks = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cxtMenuListOfTasksEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.cxtMenuListOfTasksDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.cxtMenuListOfTasksMoveUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.cxtMenuListOfTasksMoveDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.cxtMenuListOfTasksNew = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -60,6 +66,7 @@
             this.splitContainer2.SuspendLayout();
             this.contextMenuCurrentTask.SuspendLayout();
             this.contextMenuNotify.SuspendLayout();
+            this.contextMenuListOfTasks.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -88,6 +95,7 @@
             this.listViewAllTasks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewAllTasks.ContextMenuStrip = this.contextMenuListOfTasks;
             this.listViewAllTasks.Location = new System.Drawing.Point(3, 3);
             this.listViewAllTasks.Name = "listViewAllTasks";
             this.listViewAllTasks.Size = new System.Drawing.Size(233, 289);
@@ -140,7 +148,7 @@
             this.cxtMenuCurrentTaskSetNotCompleted,
             this.cxtMenuCurrentTaskDeleteSubtask});
             this.contextMenuCurrentTask.Name = "contextMenuCurrentTask";
-            this.contextMenuCurrentTask.Size = new System.Drawing.Size(214, 158);
+            this.contextMenuCurrentTask.Size = new System.Drawing.Size(214, 136);
             // 
             // cxtMenuCurrentTaskMoveUp
             // 
@@ -252,6 +260,7 @@
             // 
             // checkHideCompletedSubtasks
             // 
+            this.checkHideCompletedSubtasks.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkHideCompletedSubtasks.AutoSize = true;
             this.checkHideCompletedSubtasks.Location = new System.Drawing.Point(576, 12);
             this.checkHideCompletedSubtasks.Name = "checkHideCompletedSubtasks";
@@ -267,6 +276,52 @@
             this.cxtMenuCurrentTaskEdit.Size = new System.Drawing.Size(213, 22);
             this.cxtMenuCurrentTaskEdit.Text = "Edit (F2)";
             this.cxtMenuCurrentTaskEdit.Click += new System.EventHandler(this.cxtMenuCurrentTaskEdit_Click);
+            // 
+            // contextMenuListOfTasks
+            // 
+            this.contextMenuListOfTasks.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cxtMenuListOfTasksNew,
+            this.cxtMenuListOfTasksEdit,
+            this.cxtMenuListOfTasksDelete,
+            this.cxtMenuListOfTasksMoveUp,
+            this.cxtMenuListOfTasksMoveDown});
+            this.contextMenuListOfTasks.Name = "contextMenuListOfTasks";
+            this.contextMenuListOfTasks.Size = new System.Drawing.Size(212, 114);
+            // 
+            // cxtMenuListOfTasksEdit
+            // 
+            this.cxtMenuListOfTasksEdit.Name = "cxtMenuListOfTasksEdit";
+            this.cxtMenuListOfTasksEdit.Size = new System.Drawing.Size(211, 22);
+            this.cxtMenuListOfTasksEdit.Text = "Edit (F2)";
+            this.cxtMenuListOfTasksEdit.Click += new System.EventHandler(this.cxtMenuListOfTasksEdit_Click);
+            // 
+            // cxtMenuListOfTasksDelete
+            // 
+            this.cxtMenuListOfTasksDelete.Name = "cxtMenuListOfTasksDelete";
+            this.cxtMenuListOfTasksDelete.Size = new System.Drawing.Size(211, 22);
+            this.cxtMenuListOfTasksDelete.Text = "Delete (Suppr)";
+            this.cxtMenuListOfTasksDelete.Click += new System.EventHandler(this.cxtMenuListOfTasksDelete_Click);
+            // 
+            // cxtMenuListOfTasksMoveUp
+            // 
+            this.cxtMenuListOfTasksMoveUp.Name = "cxtMenuListOfTasksMoveUp";
+            this.cxtMenuListOfTasksMoveUp.Size = new System.Drawing.Size(211, 22);
+            this.cxtMenuListOfTasksMoveUp.Text = "Move up (Ctrl + up)";
+            this.cxtMenuListOfTasksMoveUp.Click += new System.EventHandler(this.cxtMenuListOfTasksMoveUp_Click);
+            // 
+            // cxtMenuListOfTasksMoveDown
+            // 
+            this.cxtMenuListOfTasksMoveDown.Name = "cxtMenuListOfTasksMoveDown";
+            this.cxtMenuListOfTasksMoveDown.Size = new System.Drawing.Size(211, 22);
+            this.cxtMenuListOfTasksMoveDown.Text = "Move down (Ctrl + down)";
+            this.cxtMenuListOfTasksMoveDown.Click += new System.EventHandler(this.cxtMenuListOfTasksMoveDown_Click);
+            // 
+            // cxtMenuListOfTasksNew
+            // 
+            this.cxtMenuListOfTasksNew.Name = "cxtMenuListOfTasksNew";
+            this.cxtMenuListOfTasksNew.Size = new System.Drawing.Size(211, 22);
+            this.cxtMenuListOfTasksNew.Text = "New (Ctrl + N)";
+            this.cxtMenuListOfTasksNew.Click += new System.EventHandler(this.cxtMenuListOfTasksNew_Click);
             // 
             // MainForm
             // 
@@ -295,6 +350,7 @@
             this.splitContainer2.ResumeLayout(false);
             this.contextMenuCurrentTask.ResumeLayout(false);
             this.contextMenuNotify.ResumeLayout(false);
+            this.contextMenuListOfTasks.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -321,5 +377,11 @@
         private System.Windows.Forms.Button btnDeleteTask;
         private System.Windows.Forms.CheckBox checkHideCompletedSubtasks;
         private System.Windows.Forms.ToolStripMenuItem cxtMenuCurrentTaskEdit;
+        private System.Windows.Forms.ContextMenuStrip contextMenuListOfTasks;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuListOfTasksNew;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuListOfTasksEdit;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuListOfTasksDelete;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuListOfTasksMoveUp;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuListOfTasksMoveDown;
     }
 }
