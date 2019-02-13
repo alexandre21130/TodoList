@@ -310,6 +310,7 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void MainForm_Load(object sender, EventArgs e)
         {
+            this.Text = "TodoList v" + Application.ProductVersion.ToString();
             _controler.Init();
         }
 
