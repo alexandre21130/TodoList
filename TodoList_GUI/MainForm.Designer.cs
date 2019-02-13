@@ -49,6 +49,7 @@
             this.btnEditTask = new System.Windows.Forms.Button();
             this.btnDeleteTask = new System.Windows.Forms.Button();
             this.checkHideCompletedSubtasks = new System.Windows.Forms.CheckBox();
+            this.cxtMenuCurrentTaskEdit = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -132,13 +133,14 @@
             // contextMenuCurrentTask
             // 
             this.contextMenuCurrentTask.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cxtMenuCurrentTaskEdit,
             this.cxtMenuCurrentTaskMoveUp,
             this.cxtMenuCurrentTaskMoveDown,
             this.cxtMenuCurrentTaskSetCompleted,
             this.cxtMenuCurrentTaskSetNotCompleted,
             this.cxtMenuCurrentTaskDeleteSubtask});
             this.contextMenuCurrentTask.Name = "contextMenuCurrentTask";
-            this.contextMenuCurrentTask.Size = new System.Drawing.Size(214, 114);
+            this.contextMenuCurrentTask.Size = new System.Drawing.Size(214, 158);
             // 
             // cxtMenuCurrentTaskMoveUp
             // 
@@ -259,6 +261,13 @@
             this.checkHideCompletedSubtasks.UseVisualStyleBackColor = true;
             this.checkHideCompletedSubtasks.CheckedChanged += new System.EventHandler(this.checkHideCompletedSubtasks_CheckedChanged);
             // 
+            // cxtMenuCurrentTaskEdit
+            // 
+            this.cxtMenuCurrentTaskEdit.Name = "cxtMenuCurrentTaskEdit";
+            this.cxtMenuCurrentTaskEdit.Size = new System.Drawing.Size(213, 22);
+            this.cxtMenuCurrentTaskEdit.Text = "Edit (F2)";
+            this.cxtMenuCurrentTaskEdit.Click += new System.EventHandler(this.cxtMenuCurrentTaskEdit_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -311,5 +320,6 @@
         private System.Windows.Forms.Button btnEditTask;
         private System.Windows.Forms.Button btnDeleteTask;
         private System.Windows.Forms.CheckBox checkHideCompletedSubtasks;
+        private System.Windows.Forms.ToolStripMenuItem cxtMenuCurrentTaskEdit;
     }
 }

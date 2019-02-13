@@ -598,5 +598,15 @@ namespace TodoList_GUI
                 return;
             _controler.ChangeSubtaskFilter(checkHideCompletedSubtasks.Checked);
         }
+
+        /// <summary>
+        /// Click on context menu Edit on a subtask
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cxtMenuCurrentTaskEdit_Click(object sender, EventArgs e)
+        {
+            _controler.EditCurrentTask();
+        }
     }
 }
