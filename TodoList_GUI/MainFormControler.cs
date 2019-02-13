@@ -10,6 +10,52 @@ using TodoList_Library;
 
 namespace TodoList_GUI
 {
+    /// <summary>
+    /// helper class to accumulate all changes that have to be applied to the main screen for a given operation
+    /// </summary>
+    public class RefreshContext
+    {
+        public Boolean Description { get; set; }
+        public Boolean ListOfTasksHard { get; set; }
+        public Boolean ListOfTasksSoft { get; set; }
+        public Boolean CurrentTaskHard { get; set; }
+        public Boolean CurrentTaskSoft { get; set; }
+        public Boolean Menus { get; set; }
+
+
+        /// <summary>
+        /// constructor, by default no one change is needed
+        /// </summary>
+        public RefreshContext()
+        {
+            Description = false;
+            ListOfTasksHard = false;
+            ListOfTasksSoft = false;
+            CurrentTaskHard = false;
+            CurrentTaskSoft = false;
+            Menus = false;
+        }
+
+        /// <summary>
+        /// set all parts to refresh to true
+        /// </summary>
+        public void SetAll()
+        {
+            Description = true;
+            ListOfTasksHard = true;
+            ListOfTasksSoft = true;
+            CurrentTaskHard = true;
+            CurrentTaskSoft = true;
+            Menus = true;
+        }
+
+
+    }
+
+
+    /// <summary>
+    /// controller of the main form
+    /// </summary>
     public class MainFormControler
     {
         private MainForm _view;
@@ -17,6 +63,7 @@ namespace TodoList_GUI
         private String _saveFileName;
         private TaskToDo _selectedTask;
         private TaskToDo _selectedSubtask;
+        private Boolean _hideCompletedSubtasks;
 
         /// <summary>
         /// constructor
@@ -28,7 +75,40 @@ namespace TodoList_GUI
             _saveFileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TasksToDo.txt");
             _selectedTask = null;
             _selectedSubtask = null;
+            _hideCompletedSubtasks = false;
         }
+
+        /// <summary>
+        /// changes the selected task (inside the list of tasks)
+        /// </summary>
+        /// <param name="selectedTask"></param>
+        /// <param name="refreshContext"></param>
+        private void SetSelectedTask(TaskToDo selectedTask, RefreshContext refreshContext)
+        {
+            _selectedTask = selectedTask;
+            refreshContext.ListOfTasksSoft = true;
+            refreshContext.CurrentTaskHard = true;
+            refreshContext.Menus = true;
+            refreshContext.Description = true;
+        }
+
+        /// <summary>
+        /// changes the selected subtask (inside the current task)
+        /// </summary>
+        /// <param name="selectedSubtask"></param>
+        /// <param name="refreshContext"></param>
+        private void SetSelectedSubTask(TaskToDo selectedSubtask, RefreshContext refreshContext)
+        {
+            _selectedSubtask = selectedSubtask;
+            refreshContext.CurrentTaskSoft = true;
+            refreshContext.Menus = true;
+            refreshContext.Description = true;
+        }
+
+        /// <summary>
+        /// gets true if completed subtasks have to be hidden
+        /// </summary>
+        public Boolean HideCompletedSubtasks { get { return _hideCompletedSubtasks; } }
 
         /// <summary>
         /// init the controller and the main view
@@ -41,11 +121,9 @@ namespace TodoList_GUI
             else
                 _view.DisplayMessageBox(String.Format("{0} doesn't exist, create a new empty collection of tasks", _saveFileName), "New file");
             //Refresh all the GUI
-            _view.HardRefreshListOfTasks(_tasks.Tasks, null);
-            _view.HardRefreshCurrentTask(_selectedTask, _selectedSubtask);
-            _view.RefreshContextMenuCurrentTask(_selectedSubtask);
-            _view.RefreshDescription("Nothing selected for the moment");
-
+            RefreshContext refresher = new RefreshContext();
+            refresher.SetAll();
+            RefreshGui(refresher);
         }
 
         /// <summary>
@@ -54,12 +132,9 @@ namespace TodoList_GUI
         /// <param name="selectedTask"></param>
         public void SelectCurrentTask(TaskToDo selectedTask)
         {
-            _selectedTask = selectedTask;
-            _selectedSubtask = _selectedTask; //select the higer level in the current task
-            _view.SoftRefreshListOfTasks(_selectedTask);
-            _view.HardRefreshCurrentTask(_selectedTask, _selectedSubtask);
-            _view.RefreshContextMenuCurrentTask(_selectedSubtask);
-            _view.RefreshDescription(_selectedTask == null ? "Nothing selected" : _selectedTask.Description);
+            RefreshContext refresher = new RefreshContext();
+            SetSelectedTask(selectedTask, refresher);
+            RefreshGui(refresher);
         }
 
         /// <summary>
@@ -68,10 +143,9 @@ namespace TodoList_GUI
         /// <param name="selectedSubtask"></param>
         public void SelectCurrentSubTask(TaskToDo selectedSubtask)
         {
-            _selectedSubtask = selectedSubtask;
-            _view.SoftRefreshCurrentTask(_selectedSubtask);
-            _view.RefreshContextMenuCurrentTask(_selectedSubtask);
-            _view.RefreshDescription(_selectedSubtask != null ? _selectedSubtask.Description : (_selectedTask != null ? _selectedTask.Description : "Nothing selected"));
+            RefreshContext refresher = new RefreshContext();
+            SetSelectedSubTask(selectedSubtask, refresher);
+            RefreshGui(refresher);
         }
 
         /// <summary>
@@ -79,14 +153,22 @@ namespace TodoList_GUI
         /// </summary>
         public void SetCurrentSubTaskCompleted()
         {
-            if(_selectedSubtask != null)
+            if (_selectedSubtask == null)
+                return;
+            RefreshContext refresher = new RefreshContext();
+            //change status of current selected subtask
+            _selectedSubtask.SetCompleted();
+            SaveTasksToFile();
+            //add needed update to the GUI
+            refresher.CurrentTaskSoft = true;
+            refresher.Menus = true;
+            //change selected items if it becomes hidden
+            if (_hideCompletedSubtasks) //become hidden, change the selected item for the top level task 
             {
-                _selectedSubtask.SetCompleted();
-                SaveTasksToFile();
-                _view.SoftRefreshListOfTasks(_selectedTask);
-                _view.SoftRefreshCurrentTask(_selectedSubtask);
-                _view.RefreshContextMenuCurrentTask(_selectedSubtask);
+                SetSelectedSubTask(_selectedTask, refresher); //task of top level is now selected
+                refresher.CurrentTaskHard = true;
             }
+            RefreshGui(refresher);
         }
 
         /// <summary>
@@ -94,14 +176,22 @@ namespace TodoList_GUI
         /// </summary>
         public void SetCurrentSubTaskNotCompleted()
         {
-            if (_selectedSubtask != null)
-            {
-                _selectedSubtask.SetNotCompleted();
-                SaveTasksToFile();
-                _view.SoftRefreshListOfTasks(_selectedTask);
-                _view.SoftRefreshCurrentTask(_selectedSubtask);
-                _view.RefreshContextMenuCurrentTask(_selectedSubtask);
-            }
+            if (_selectedSubtask == null)
+                return;
+            //update task status
+            Boolean hasBegun = _selectedSubtask.Progression.HasBegun; //need to know if we will modify one of its child
+            _selectedSubtask.SetNotCompleted();
+            SaveTasksToFile();
+            //update GUI
+            RefreshContext refresher = new RefreshContext();
+            refresher.Menus = true;
+            if (_hideCompletedSubtasks && hasBegun) //new child will appear
+                refresher.CurrentTaskHard = true;
+            else //all child were already visible
+                refresher.CurrentTaskSoft = true;
+            refresher.ListOfTasksSoft = true;
+            RefreshGui(refresher);
+
         }
 
         /// <summary>
@@ -110,16 +200,12 @@ namespace TodoList_GUI
         /// </summary>
         public void SetOrResetCurrentTaskCompleted()
         {
-            if(_selectedSubtask != null)
+            if (_selectedSubtask != null)
             {
                 if (_selectedSubtask.IsCompleted)
-                    _selectedSubtask.SetNotCompleted();
+                    SetCurrentSubTaskNotCompleted();
                 else
-                    _selectedSubtask.SetCompleted();
-                SaveTasksToFile();
-                _view.SoftRefreshListOfTasks(_selectedTask);
-                _view.SoftRefreshCurrentTask(_selectedSubtask);
-                _view.RefreshContextMenuCurrentTask(_selectedSubtask);
+                    SetCurrentSubTaskCompleted();
             }
         }
 
@@ -128,31 +214,27 @@ namespace TodoList_GUI
         /// </summary>
         public void EditCurrentTask()
         {
-            Boolean updated = false;
-            if(_selectedTask != null)
+            if (_selectedTask == null)
+                return;
+            TaskToDo editedTask = null;
+            using (FormTaskEditor form = new FormTaskEditor(_selectedTask))
             {
-                using (FormTaskEditor form = new FormTaskEditor(_selectedTask))
-                {
-                    if(form.ShowDialog()== DialogResult.OK)
-                    {
-                        TaskToDo newTask = form.Task;
-                        _tasks.ReplaceTask(_selectedTask, newTask);
-                        _selectedTask = newTask;
-                        _selectedSubtask = null;
-                        updated = true;
-                    }
-                }
+                if (form.ShowDialog() == DialogResult.OK)
+                    editedTask = form.Task;
             }
-            if(updated)
+            if (editedTask != null)
             {
+                //proceed to task replacement
+                _tasks.ReplaceTask(_selectedTask, editedTask);
                 SaveTasksToFile();
-                _view.HardRefreshListOfTasks(_tasks.Tasks, _selectedTask);
-                _view.HardRefreshCurrentTask(_selectedTask, _selectedSubtask);
-                _view.RefreshContextMenuCurrentTask(_selectedSubtask);
-                _view.RefreshDescription(_selectedTask.Description);
+                //Change the selection with current task
+                _selectedTask = editedTask;
+                _selectedSubtask = editedTask;
+                //Refresh GUI
+                RefreshContext refresher = new RefreshContext();
+                refresher.SetAll();
+                RefreshGui(refresher);
             }
-
-
         }
 
         /// <summary>
@@ -166,16 +248,18 @@ namespace TodoList_GUI
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     newTask = dialog.Task;
             }
-            if(newTask != null)
+            if (newTask != null)
             {
+                //save the new task
                 _tasks.AddTask(newTask);
                 SaveTasksToFile();
+                //select this new task
                 _selectedTask = newTask;
                 _selectedSubtask = newTask;
-                _view.HardRefreshListOfTasks(_tasks.Tasks, _selectedTask);
-                _view.HardRefreshCurrentTask(_selectedTask, _selectedSubtask);
-                _view.RefreshContextMenuCurrentTask(_selectedSubtask);
-                _view.RefreshDescription(_selectedTask.Description);
+                //Refresh GUI
+                RefreshContext refresher = new RefreshContext();
+                refresher.SetAll();
+                RefreshGui(refresher);
             }
         }
 
@@ -184,16 +268,16 @@ namespace TodoList_GUI
         /// </summary>
         public void MoveSelectedSubtaskUp()
         {
-            if(_selectedSubtask != null)
-            {
-                if(_selectedSubtask.CanMoveUp())
-                {
-                    _selectedSubtask.MoveUp();
-                    SaveTasksToFile();
-                    _view.HardRefreshCurrentTask(_selectedTask, _selectedSubtask);
-                    _view.RefreshContextMenuCurrentTask(_selectedSubtask);
-                }
-            }
+            if (_selectedSubtask == null || !_selectedSubtask.CanMoveUp())
+                return;
+            //move the subtask up
+            _selectedSubtask.MoveUp();
+            SaveTasksToFile();
+            //Refresh GUI
+            RefreshContext refresher = new RefreshContext();
+            refresher.CurrentTaskHard = true;
+            refresher.Menus = true;
+            RefreshGui(refresher);
         }
 
         /// <summary>
@@ -201,16 +285,16 @@ namespace TodoList_GUI
         /// </summary>
         public void MoveSelectedSubtaskDown()
         {
-            if (_selectedSubtask != null)
-            {
-                if (_selectedSubtask.CanMoveDown())
-                {
-                    _selectedSubtask.MoveDown();
-                    SaveTasksToFile();
-                    _view.HardRefreshCurrentTask(_selectedTask, _selectedSubtask);
-                    _view.RefreshContextMenuCurrentTask(_selectedSubtask);
-                }
-            }
+            if (_selectedSubtask == null || !_selectedSubtask.CanMoveDown())
+                return;
+            //move the subtask down
+            _selectedSubtask.MoveDown();
+            SaveTasksToFile();
+            //Refresh GUI
+            RefreshContext refresher = new RefreshContext();
+            refresher.CurrentTaskHard = true;
+            refresher.Menus = true;
+            RefreshGui(refresher);
         }
 
         /// <summary>
@@ -218,17 +302,18 @@ namespace TodoList_GUI
         /// </summary>
         public void DeleteSelectedTask()
         {
-            if(_selectedTask != null)
-            {
-                _tasks.RemoveTask(_selectedTask);
-                SaveTasksToFile();
-                _selectedTask = null;
-                _selectedSubtask = null;
-                _view.HardRefreshListOfTasks(_tasks.Tasks, _selectedTask);
-                _view.HardRefreshCurrentTask(_selectedTask, _selectedSubtask);
-                _view.RefreshContextMenuCurrentTask(_selectedSubtask);
-                _view.RefreshDescription("Task was deleted");
-            }
+            if (_selectedTask == null)
+                return;
+            //remove the task
+            _tasks.RemoveTask(_selectedTask);
+            SaveTasksToFile();
+            //Delete the selection
+            _selectedTask = null;
+            _selectedSubtask = null;
+            //Refresh the GUI
+            RefreshContext refresher = new RefreshContext();
+            refresher.SetAll();
+            RefreshGui(refresher);
         }
 
         /// <summary>
@@ -244,21 +329,76 @@ namespace TodoList_GUI
         /// </summary>
         public void DeleteSelectedSubtask()
         {
-            if(_selectedSubtask != null)
-            {
-                if (_selectedSubtask.IsRoot) //cannot delete a root task
-                    return;
-                TaskToDo parent = _selectedSubtask.ParentTask;
-                parent.RemoveSubtask(_selectedSubtask);
-                SaveTasksToFile();
-                _selectedSubtask = parent;
-                _view.SoftRefreshListOfTasks(_selectedTask);
-                _view.HardRefreshCurrentTask(_selectedTask, _selectedSubtask);
-                _view.RefreshContextMenuCurrentTask(_selectedSubtask);
-                _view.RefreshDescription(_selectedSubtask.Description);
-            }
+            if (_selectedSubtask == null || _selectedSubtask.IsRoot) //cannot delete the root task
+                return;
+            //remove the subtask
+            TaskToDo parent = _selectedSubtask.ParentTask;
+            parent.RemoveSubtask(_selectedSubtask);
+            SaveTasksToFile();
+            //change the selection to its parent
+            RefreshContext refresher = new RefreshContext();
+            SetSelectedSubTask(parent, refresher);
+            //update GUI
+            refresher.CurrentTaskHard = true;
+            refresher.ListOfTasksSoft = true;
+            RefreshGui(refresher);
+        }
+
+        /// <summary>
+        /// Changes the filter that is applied on subtasks
+        /// </summary>
+        /// <param name="hideCompletedSubtasks"></param>
+        public void ChangeSubtaskFilter(Boolean hideCompletedSubtasks)
+        {
+            _hideCompletedSubtasks = hideCompletedSubtasks;
+            RefreshContext refresher = new RefreshContext();
+            //change the current selected subtask if becomes hidden
+            if (_hideCompletedSubtasks && _selectedSubtask != null && _selectedSubtask.IsCompleted)
+                SetSelectedSubTask(_selectedTask, refresher); //use the top level task because it is always displayed
+            //refresh the GUI
+            refresher.CurrentTaskHard = true;
+            RefreshGui(refresher);
+        }
+
+        /// <summary>
+        /// Ask to the view to refresh its description panel
+        /// description will be filled with the current subtask description of with the current task
+        /// </summary>
+        private void RefreshDescription()
+        {
+            String description = String.Empty;
+            if (_selectedSubtask != null)
+                description = _selectedSubtask.Description;
+            else if (_selectedTask != null)
+                description = _selectedTask.Description;
+            else
+                description = "Nothing selected for the moment";
+            _view.RefreshDescription(description);
         }
 
 
+        /// <summary>
+        /// Refresh some parts of the GUI
+        /// </summary>
+        /// <param name="toRefresh"></param>
+        private void RefreshGui(RefreshContext toRefresh)
+        {
+            //list of tasks
+            if (toRefresh.ListOfTasksHard)
+                _view.HardRefreshListOfTasks(_tasks.Tasks, _selectedTask);
+            else if (toRefresh.ListOfTasksSoft)
+                _view.SoftRefreshListOfTasks(_selectedTask);
+            //current task
+            if (toRefresh.CurrentTaskHard)
+                _view.HardRefreshCurrentTask(_selectedTask, _selectedSubtask, _hideCompletedSubtasks);
+            else if (toRefresh.CurrentTaskSoft)
+                _view.SoftRefreshCurrentTask(_selectedSubtask);
+            //Description
+            if (toRefresh.Description)
+                RefreshDescription();
+            //Menus
+            if (toRefresh.Menus)
+                _view.RefreshContextMenuCurrentTask(_selectedSubtask);
+        }
     }
 }

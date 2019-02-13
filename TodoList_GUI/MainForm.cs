@@ -140,7 +140,7 @@ namespace TodoList_GUI
         /// </summary>
         /// <param name="currentTask"></param>
         /// <param name="selectedSubtask">the subtask that is currently selected, null if nothing is selected</param>
-        public void HardRefreshCurrentTask(TaskToDo currentTask, TaskToDo selectedSubtask)
+        public void HardRefreshCurrentTask(TaskToDo currentTask, TaskToDo selectedSubtask, Boolean hideCompletedSubtasks)
         {
             _disableEvents = true;
             currentTaskTreeView.Nodes.Clear();
@@ -153,7 +153,7 @@ namespace TodoList_GUI
             }
             else //something to display
             {
-                TreeNode newNode = CreateRecursiveNodesFromTask(currentTask);
+                TreeNode newNode = CreateRecursiveNodesFromTask(currentTask, hideCompletedSubtasks);
                 currentTaskTreeView.Nodes.Add(newNode);
             }
             currentTaskTreeView.ExpandAll();
@@ -213,17 +213,21 @@ namespace TodoList_GUI
 
         /// <summary>
         /// Create a recursive treenode from a task
+        /// in mode hideCompletedSubtasks, child nodes for completed subtasks are not created
+        /// (top level is always created even if it is completed)
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
-        private TreeNode CreateRecursiveNodesFromTask(TaskToDo task)
+        private TreeNode CreateRecursiveNodesFromTask(TaskToDo task, Boolean hideCompletedSubtasks)
         {
             TreeNode result = new TreeNode(task.Name);
             result.Tag = task;
             FormatSubtaskItem(result, task);
             foreach (TaskToDo subtask in task.Subtasks)
             {
-                result.Nodes.Add(CreateRecursiveNodesFromTask(subtask));
+                if (hideCompletedSubtasks && subtask.IsCompleted) //do not create subtasks that are completed in filtered mode
+                    continue;
+                result.Nodes.Add(CreateRecursiveNodesFromTask(subtask,hideCompletedSubtasks));
             }
             return result;
         }
