@@ -20,7 +20,8 @@ namespace TodoList_GUI
         public Boolean ListOfTasksSoft { get; set; }
         public Boolean CurrentTaskHard { get; set; }
         public Boolean CurrentTaskSoft { get; set; }
-        public Boolean Menus { get; set; }
+        public Boolean ContextMenus { get; set; }
+        public Boolean FilterOption { get; set; }
 
 
         /// <summary>
@@ -33,7 +34,8 @@ namespace TodoList_GUI
             ListOfTasksSoft = false;
             CurrentTaskHard = false;
             CurrentTaskSoft = false;
-            Menus = false;
+            ContextMenus = false;
+            FilterOption = false;
         }
 
         /// <summary>
@@ -46,7 +48,8 @@ namespace TodoList_GUI
             ListOfTasksSoft = true;
             CurrentTaskHard = true;
             CurrentTaskSoft = true;
-            Menus = true;
+            ContextMenus = true;
+            FilterOption = true;
         }
 
 
@@ -88,7 +91,7 @@ namespace TodoList_GUI
             _selectedTask = selectedTask;
             refreshContext.ListOfTasksSoft = true;
             refreshContext.CurrentTaskHard = true;
-            refreshContext.Menus = true;
+            refreshContext.ContextMenus = true;
             refreshContext.Description = true;
         }
 
@@ -101,7 +104,7 @@ namespace TodoList_GUI
         {
             _selectedSubtask = selectedSubtask;
             refreshContext.CurrentTaskSoft = true;
-            refreshContext.Menus = true;
+            refreshContext.ContextMenus = true;
             refreshContext.Description = true;
         }
 
@@ -161,7 +164,7 @@ namespace TodoList_GUI
             SaveTasksToFile();
             //add needed update to the GUI
             refresher.CurrentTaskSoft = true;
-            refresher.Menus = true;
+            refresher.ContextMenus = true;
             //change selected items if it becomes hidden
             if (_hideCompletedSubtasks) //become hidden, change the selected item for the top level task 
             {
@@ -184,7 +187,7 @@ namespace TodoList_GUI
             SaveTasksToFile();
             //update GUI
             RefreshContext refresher = new RefreshContext();
-            refresher.Menus = true;
+            refresher.ContextMenus = true;
             if (_hideCompletedSubtasks && hasBegun) //new child will appear
                 refresher.CurrentTaskHard = true;
             else //all child were already visible
@@ -276,7 +279,7 @@ namespace TodoList_GUI
             //Refresh GUI
             RefreshContext refresher = new RefreshContext();
             refresher.CurrentTaskHard = true;
-            refresher.Menus = true;
+            refresher.ContextMenus = true;
             RefreshGui(refresher);
         }
 
@@ -293,7 +296,7 @@ namespace TodoList_GUI
             //Refresh GUI
             RefreshContext refresher = new RefreshContext();
             refresher.CurrentTaskHard = true;
-            refresher.Menus = true;
+            refresher.ContextMenus = true;
             RefreshGui(refresher);
         }
 
@@ -357,6 +360,7 @@ namespace TodoList_GUI
                 SetSelectedSubTask(_selectedTask, refresher); //use the top level task because it is always displayed
             //refresh the GUI
             refresher.CurrentTaskHard = true;
+            refresher.FilterOption = true;
             RefreshGui(refresher);
         }
 
@@ -396,9 +400,12 @@ namespace TodoList_GUI
             //Description
             if (toRefresh.Description)
                 RefreshDescription();
-            //Menus
-            if (toRefresh.Menus)
+            //context Menus
+            if (toRefresh.ContextMenus)
                 _view.RefreshContextMenuCurrentTask(_selectedSubtask);
+            //filter options
+            if (toRefresh.FilterOption)
+                _view.RefreshFilterOptions(_hideCompletedSubtasks);
         }
     }
 }

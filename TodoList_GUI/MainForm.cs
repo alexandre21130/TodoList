@@ -161,6 +161,7 @@ namespace TodoList_GUI
             _disableEvents = false;
         }
 
+
         /// <summary>
         /// Enable disable buttons in context menu for current task
         /// </summary>
@@ -529,6 +530,62 @@ namespace TodoList_GUI
         private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             _controler.DeleteSelectedSubtask();
+        }
+
+       
+
+
+        /// <summary>
+        /// Refresh the main menu
+        /// </summary>
+        /// <param name="hideCompletedSubtasks"></param>
+        public void RefreshFilterOptions(Boolean hideCompletedSubtasks)
+        {
+            _disableEvents = true;
+            checkHideCompletedSubtasks.Checked = hideCompletedSubtasks;
+            _disableEvents = false;
+        }
+
+        /// <summary>
+        /// click on the button New
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnNewTask_Click(object sender, EventArgs e)
+        {
+            _controler.CreateNewTask();
+        }
+
+        /// <summary>
+        /// click on the button edit current selected task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEditTask_Click(object sender, EventArgs e)
+        {
+            _controler.EditCurrentTask();
+        }
+
+        /// <summary>
+        /// click on button Delete current task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDeleteTask_Click(object sender, EventArgs e)
+        {
+            _controler.DeleteSelectedTask();
+        }
+
+        /// <summary>
+        /// Click on checkbox to hide / view completed subtasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkHideCompletedSubtasks_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_disableEvents)
+                return;
+            _controler.ChangeSubtaskFilter(checkHideCompletedSubtasks.Checked);
         }
     }
 }
