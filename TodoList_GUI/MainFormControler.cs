@@ -382,6 +382,34 @@ namespace TodoList_GUI
 
 
         /// <summary>
+        /// Ask to the view to refresh its context menus
+        /// </summary>
+        private void RefreshContextMenus()
+        {
+            Boolean newTask = true; //always available
+            Boolean editTask = _selectedTask != null;
+            Boolean deleteTask = _selectedTask != null;
+            Boolean moveUpTask = false; //TODO : to handle
+            Boolean moveDownTask = false; //TODO : to handle
+            Boolean deleteSubtask = _selectedSubtask != null && !_selectedSubtask.IsRoot;
+            Boolean moveUpSubtask = _selectedSubtask != null && _selectedSubtask.CanMoveUp();
+            Boolean moveDownSubtask = _selectedSubtask != null && _selectedSubtask.CanMoveDown();
+            Boolean setCompleted = _selectedSubtask != null && !_selectedSubtask.IsCompleted;
+            Boolean setNotCompleted = _selectedSubtask != null && _selectedSubtask.Progression.HasBegun;
+            _view.RefreshContextMenus(
+                newTask,
+                editTask,
+                deleteTask,
+                moveUpTask,
+                moveDownTask,
+                deleteSubtask,
+                moveUpSubtask,
+                moveDownSubtask,
+                setCompleted,
+                setNotCompleted);
+        }
+
+        /// <summary>
         /// Refresh some parts of the GUI
         /// </summary>
         /// <param name="toRefresh"></param>
@@ -402,7 +430,7 @@ namespace TodoList_GUI
                 RefreshDescription();
             //context Menus
             if (toRefresh.ContextMenus)
-                _view.RefreshContextMenuCurrentTask(_selectedSubtask);
+                RefreshContextMenus();
             //filter options
             if (toRefresh.FilterOption)
                 _view.RefreshFilterOptions(_hideCompletedSubtasks);

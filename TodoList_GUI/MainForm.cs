@@ -163,27 +163,38 @@ namespace TodoList_GUI
 
 
         /// <summary>
-        /// Enable disable buttons in context menu for current task
+        /// Refresh context menus (and context buttons)
         /// </summary>
-        /// <param name="selectedSubtask"></param>
-        public void RefreshContextMenuCurrentTask(TaskToDo selectedSubtask)
+        /// <param name="newTask"></param>
+        /// <param name="editTask"></param>
+        /// <param name="deleteTask"></param>
+        /// <param name="moveUpTask"></param>
+        /// <param name="moveDownTask"></param>
+        /// <param name="deleteSubtask"></param>
+        /// <param name="moveUpSubtask"></param>
+        /// <param name="moveDownSubtask"></param>
+        public void RefreshContextMenus(
+            Boolean newTask,
+            Boolean editTask,
+            Boolean deleteTask,
+            Boolean moveUpTask,
+            Boolean moveDownTask,
+            Boolean deleteSubtask,
+            Boolean moveUpSubtask,
+            Boolean moveDownSubtask,
+            Boolean setCompleted,
+            Boolean setNotCompleted)
         {
-            if (selectedSubtask == null)
-            {
-                cxtMenuCurrentTaskMoveUp.Enabled = false;
-                cxtMenuCurrentTaskMoveDown.Enabled = false;
-                cxtMenuCurrentTaskSetCompleted.Enabled = false;
-                cxtMenuCurrentTaskSetNotCompleted.Enabled = false;
-                cxtMenuCurrentTaskDeleteSubtask.Enabled = false;
-            }
-            else
-            {
-                cxtMenuCurrentTaskMoveUp.Enabled = selectedSubtask.CanMoveUp();
-                cxtMenuCurrentTaskMoveDown.Enabled = selectedSubtask.CanMoveDown();
-                cxtMenuCurrentTaskSetCompleted.Enabled = !selectedSubtask.IsCompleted;
-                cxtMenuCurrentTaskSetNotCompleted.Enabled = selectedSubtask.Progression.HasBegun;
-                cxtMenuCurrentTaskDeleteSubtask.Enabled = !selectedSubtask.IsRoot;
-            }
+            btnNewTask.Enabled = newTask;
+            btnEditTask.Enabled = editTask;
+            btnDeleteTask.Enabled = deleteTask;
+            //TODO : handle move up task
+            //TODO : handle move down task
+            cxtMenuCurrentTaskDeleteSubtask.Enabled = deleteSubtask;
+            cxtMenuCurrentTaskMoveUp.Enabled = moveUpSubtask;
+            cxtMenuCurrentTaskMoveDown.Enabled = moveDownSubtask;
+            cxtMenuCurrentTaskSetCompleted.Enabled = setCompleted;
+            cxtMenuCurrentTaskSetNotCompleted.Enabled = setNotCompleted;
         }
 
         /// <summary>
