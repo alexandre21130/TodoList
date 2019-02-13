@@ -88,19 +88,25 @@ namespace TodoList_GUI
         {
             _disableEvents = true;
             listViewAllTasks.Items.Clear();
+            ListViewItem selectedItem = null;
             foreach (TaskToDo currentTask in tasks)
             {
                 ListViewItem newItem = new ListViewItem(currentTask.Name);
                 newItem.Tag = currentTask;
                 FormatTaskItem(newItem, currentTask);
                 listViewAllTasks.Items.Add(newItem);
+                newItem.Selected = false;
                 if (currentTask == selectedTask)
                 {
-                    newItem.Selected = true;
                     newItem.Text = "=>   " + newItem.Text;
+                    selectedItem = newItem;
                 }
-
+                else
+                    newItem.Selected = false;
             }
+            if (selectedItem != null)
+                selectedItem.Selected = true;
+            
             _disableEvents = false;
         }
 
@@ -402,6 +408,8 @@ namespace TodoList_GUI
                     if (e.Control)
                         _controler.CreateNewTask();
                     break;
+                    //Ctrl + Up (to move selected task up) is managed at the form level (key preview)
+                    //Ctrl + Down (to move selected task down) is managed at the form level (key preview)
             }
         }
 
@@ -445,7 +453,7 @@ namespace TodoList_GUI
         {
             notifyIcon1.Visible = true;
             this.Hide();
-            notifyIcon1.ShowBalloonTip(3000, "TodoList", "TodoList minimized here", ToolTipIcon.Info);
+            //notifyIcon1.ShowBalloonTip(3000, "TodoList", "TodoList minimized here", ToolTipIcon.Info);
         }
 
         /// <summary>
@@ -650,7 +658,7 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void cxtMenuListOfTasksMoveUp_Click(object sender, EventArgs e)
         {
-            //TODO : to handle
+            _controler.MoveSelectedTaskUp();
         }
 
         /// <summary>
@@ -660,7 +668,30 @@ namespace TodoList_GUI
         /// <param name="e"></param>
         private void cxtMenuListOfTasksMoveDown_Click(object sender, EventArgs e)
         {
-            //TODO : to handle
+            _controler.MoveSelectedTaskDown();
+        }
+
+
+        private void listViewAllTasks_KeyUp(object sender, KeyEventArgs e)
+        {
+            
+
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.Down && listViewAllTasks.Focused) //Ctrl + down on the list of tasks => move down selected task
+            {
+                _controler.MoveSelectedTaskDown();
+                e.Handled = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.Up && listViewAllTasks.Focused) //Ctrl + up on the list of tasks => move up selected task
+            {
+                _controler.MoveSelectedTaskUp();
+                e.Handled = true;
+            }
+            else
+                e.Handled = false;
         }
     }
 }

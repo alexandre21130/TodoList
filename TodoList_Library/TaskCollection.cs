@@ -71,10 +71,10 @@ namespace TodoList_Library
             List<StringBuilder> listOfGroups = new List<StringBuilder>();
             using (StreamReader reader = new StreamReader(file))
             {
-                while(!reader.EndOfStream)
+                while (!reader.EndOfStream)
                 {
                     String line = reader.ReadLine();
-                    if((line == separator) || (currentGroup == null)) //begin of new group, add this group in the list
+                    if ((line == separator) || (currentGroup == null)) //begin of new group, add this group in the list
                     {
                         currentGroup = new StringBuilder();
                         listOfGroups.Add(currentGroup);
@@ -85,7 +85,7 @@ namespace TodoList_Library
             }
             //convert each group of lines into tasks and add them into the collection
             TaskToStringConvertor convertor = new TaskToStringConvertor();
-            foreach(StringBuilder sb in listOfGroups)
+            foreach (StringBuilder sb in listOfGroups)
             {
                 TaskToDo task = convertor.StringToTask(sb.ToString());
                 _allTasks.Add(task);
@@ -105,7 +105,7 @@ namespace TodoList_Library
             using (StreamWriter writer = new StreamWriter(fileName, false))
             {
                 TaskToStringConvertor convertor = new TaskToStringConvertor();
-                foreach(TaskToDo task in _allTasks)
+                foreach (TaskToDo task in _allTasks)
                 {
                     writer.WriteLine(separator);
                     writer.WriteLine(convertor.TaskToString(task));
@@ -125,6 +125,58 @@ namespace TodoList_Library
             _allTasks.RemoveAt(index);
             _allTasks.Insert(index, taskToInsert);
         }
+
+        /// <summary>
+        /// returns true if a given task can be moved up
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        public Boolean CanMoveTaskUp(TaskToDo task)
+        {
+            int index = _allTasks.IndexOf(task);
+            return index > 0; //case where index is -1 is integrated in this condition
+        }
+
+        /// <summary>
+        /// returns true if a given task can be moved down
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        public Boolean CanMoveTaskDown(TaskToDo task)
+        {
+            int index = _allTasks.IndexOf(task);
+            int lastIndex = _allTasks.Count - 1;
+            return ((index >= 0) && (index < lastIndex)); //case where index is -1 is integrated in this condition
+        }
+
+        /// <summary>
+        /// Move a given task up -swap it with previous task)
+        /// </summary>
+        /// <param name="task"></param>
+        public void MoveTaskUp(TaskToDo task)
+        {
+            int currentIndex = _allTasks.IndexOf(task);
+            if (currentIndex < 1)
+                return;
+            _allTasks.RemoveAt(currentIndex);
+            _allTasks.Insert(currentIndex - 1, task);
+        }
+
+        /// <summary>
+        /// Move a given task down (swap it with next task)
+        /// </summary>
+        /// <param name="task"></param>
+        public void MoveTaskDown(TaskToDo task)
+        {
+            int currentIndex = _allTasks.IndexOf(task);
+            int lastIndex = _allTasks.Count - 1;
+            if (currentIndex < 0 || currentIndex >= lastIndex)
+                return;
+            _allTasks.RemoveAt(currentIndex);
+            _allTasks.Insert(currentIndex + 1, task); 
+        }
+
+
 
     }
 }

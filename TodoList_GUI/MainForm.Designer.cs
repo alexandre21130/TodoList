@@ -97,6 +97,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewAllTasks.ContextMenuStrip = this.contextMenuListOfTasks;
             this.listViewAllTasks.Location = new System.Drawing.Point(3, 3);
+            this.listViewAllTasks.MultiSelect = false;
             this.listViewAllTasks.Name = "listViewAllTasks";
             this.listViewAllTasks.Size = new System.Drawing.Size(233, 289);
             this.listViewAllTasks.TabIndex = 0;
@@ -104,6 +105,7 @@
             this.listViewAllTasks.View = System.Windows.Forms.View.List;
             this.listViewAllTasks.SelectedIndexChanged += new System.EventHandler(this.listViewAllTasks_SelectedIndexChanged);
             this.listViewAllTasks.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listViewAllTasks_KeyDown);
+            this.listViewAllTasks.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listViewAllTasks_KeyUp);
             // 
             // splitContainer2
             // 
@@ -336,9 +338,11 @@
             this.Controls.Add(this.splitContainer1);
             this.ForeColor = System.Drawing.Color.RoyalBlue;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "TodoList";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);

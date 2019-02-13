@@ -320,6 +320,40 @@ namespace TodoList_GUI
         }
 
         /// <summary>
+        /// Move the seleted task in list of tasks up
+        /// </summary>
+        public void MoveSelectedTaskUp()
+        {
+            if (_selectedTask == null || !_tasks.CanMoveTaskUp(_selectedTask))
+                return;
+            //Move task up
+            _tasks.MoveTaskUp(_selectedTask);
+            SaveTasksToFile(); 
+            //Refresh GUI
+            RefreshContext refresher = new RefreshContext();
+            refresher.ContextMenus = true;
+            refresher.ListOfTasksHard = true;
+            RefreshGui(refresher);
+        }
+
+        /// <summary>
+        /// Move the seleted task in list of tasks down
+        /// </summary>
+        public void MoveSelectedTaskDown()
+        {
+            if (_selectedTask == null || !_tasks.CanMoveTaskDown(_selectedTask))
+                return;
+            //Move task down
+            _tasks.MoveTaskDown(_selectedTask);
+            SaveTasksToFile(); 
+            //Refresh GUI
+            RefreshContext refresher = new RefreshContext();
+            refresher.ContextMenus = true;
+            refresher.ListOfTasksHard = true;
+            RefreshGui(refresher);
+        }
+
+        /// <summary>
         /// dump the current collection of tasks into a file
         /// </summary>
         private void SaveTasksToFile()
@@ -391,8 +425,8 @@ namespace TodoList_GUI
             Boolean newTask = true; //always available
             Boolean editTask = _selectedTask != null;
             Boolean deleteTask = _selectedTask != null;
-            Boolean moveUpTask = false; //TODO : to handle
-            Boolean moveDownTask = false; //TODO : to handle
+            Boolean moveUpTask = _selectedTask != null && _tasks.CanMoveTaskUp(_selectedTask);
+            Boolean moveDownTask = _selectedTask != null && _tasks.CanMoveTaskDown(_selectedTask);
             Boolean deleteSubtask = _selectedSubtask != null && !_selectedSubtask.IsRoot;
             Boolean moveUpSubtask = _selectedSubtask != null && _selectedSubtask.CanMoveUp();
             Boolean moveDownSubtask = _selectedSubtask != null && _selectedSubtask.CanMoveDown();
