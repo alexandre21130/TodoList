@@ -165,6 +165,7 @@ namespace TodoList_GUI
             //add needed update to the GUI
             refresher.CurrentTaskSoft = true;
             refresher.ContextMenus = true;
+            refresher.ListOfTasksSoft = true;
             //change selected items if it becomes hidden
             if (_hideCompletedSubtasks) //become hidden, change the selected item for the top level task 
             {
@@ -188,13 +189,13 @@ namespace TodoList_GUI
             //update GUI
             RefreshContext refresher = new RefreshContext();
             refresher.ContextMenus = true;
+            refresher.ListOfTasksSoft = true;
             if (_hideCompletedSubtasks && hasBegun) //new child will appear
                 refresher.CurrentTaskHard = true;
             else //all child were already visible
                 refresher.CurrentTaskSoft = true;
             refresher.ListOfTasksSoft = true;
             RefreshGui(refresher);
-
         }
 
         /// <summary>
@@ -460,7 +461,7 @@ namespace TodoList_GUI
             if (toRefresh.CurrentTaskHard)
                 _view.HardRefreshCurrentTask(_selectedTask, _selectedSubtask, _hideCompletedSubtasks);
             else if (toRefresh.CurrentTaskSoft)
-                _view.SoftRefreshCurrentTask(_selectedSubtask);
+                _view.SoftRefreshCurrentTask();
             //Description
             if (toRefresh.Description)
                 RefreshDescription();

@@ -163,7 +163,7 @@ namespace TodoList_GUI
                 currentTaskTreeView.Nodes.Add(newNode);
             }
             currentTaskTreeView.ExpandAll();
-            currentTaskTreeView.SelectedNode = FindSubtaskNode(currentTaskTreeView.TopNode, selectedSubtask); //select the right node
+            currentTaskTreeView.SelectedNode = FindSubtaskNode(currentTaskTreeView.Nodes[0], selectedSubtask); //select the right node
             _disableEvents = false;
         }
 
@@ -253,10 +253,9 @@ namespace TodoList_GUI
         /// <summary>
         /// Refresh the current task panel but without creating new items (reuse current items)
         /// </summary>
-        /// <param name="selectedSubtask"></param>
-        public void SoftRefreshCurrentTask(TaskToDo selectedSubtask)
+        public void SoftRefreshCurrentTask()
         {
-            SoftRefreshTreeNodeRecursive(currentTaskTreeView.TopNode);
+            SoftRefreshTreeNodeRecursive(currentTaskTreeView.Nodes[0]);
         }
 
         /// <summary>
