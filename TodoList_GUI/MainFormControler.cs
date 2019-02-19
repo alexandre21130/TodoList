@@ -89,6 +89,7 @@ namespace TodoList_GUI
         private void SetSelectedTask(TaskToDo selectedTask, RefreshContext refreshContext)
         {
             _selectedTask = selectedTask;
+            _selectedSubtask = _selectedTask != null ? _selectedTask : null;
             refreshContext.ListOfTasksSoft = true;
             refreshContext.CurrentTaskHard = true;
             refreshContext.ContextMenus = true;
@@ -137,6 +138,7 @@ namespace TodoList_GUI
         {
             RefreshContext refresher = new RefreshContext();
             SetSelectedTask(selectedTask, refresher);
+
             RefreshGui(refresher);
         }
 
