@@ -21,6 +21,8 @@ namespace TodoList_GUI
         private Font _fontCompleted;
         private Font _fontNotCompleted;
 
+        private String _selectedPrefix = "======>  ";
+
         public MainForm()
         {
             InitializeComponent();
@@ -98,7 +100,7 @@ namespace TodoList_GUI
                 newItem.Selected = false;
                 if (currentTask == selectedTask)
                 {
-                    newItem.Text = "=>   " + newItem.Text;
+                    newItem.Text = _selectedPrefix + newItem.Text;
                     selectedItem = newItem;
                 }
                 else
@@ -123,7 +125,7 @@ namespace TodoList_GUI
                 TaskToDo currentTask = (TaskToDo)currentItem.Tag;
                 FormatTaskItem(currentItem, currentTask);
                 currentItem.Selected = (currentTask == selectedTask);
-                String prefix = currentItem.Selected ? "=>   " : String.Empty;
+                String prefix = currentItem.Selected ? _selectedPrefix : String.Empty;
                 currentItem.Text = prefix + currentTask.Name;
             }
             _disableEvents = false;
@@ -194,8 +196,8 @@ namespace TodoList_GUI
             btnNewTask.Enabled = cxtMenuListOfTasksNew.Enabled = newTask;
             btnEditTask.Enabled = cxtMenuListOfTasksEdit.Enabled = editTask;
             btnDeleteTask.Enabled = cxtMenuListOfTasksDelete.Enabled = deleteTask;
-            cxtMenuListOfTasksMoveUp.Enabled = moveUpTask;
-            cxtMenuListOfTasksMoveDown.Enabled = moveDownTask;
+            cxtMenuListOfTasksMoveUp.Enabled = btnMoveTaskUp.Enabled = moveUpTask;
+            cxtMenuListOfTasksMoveDown.Enabled = btnMoveTaskDown.Enabled = moveDownTask;
             cxtMenuCurrentTaskDeleteSubtask.Enabled = deleteSubtask;
             cxtMenuCurrentTaskMoveUp.Enabled = moveUpSubtask;
             cxtMenuCurrentTaskMoveDown.Enabled = moveDownSubtask;
@@ -692,6 +694,26 @@ namespace TodoList_GUI
             }
             else
                 e.Handled = false;
+        }
+
+        /// <summary>
+        /// click on the button to move up selected task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnMoveUp_Click(object sender, EventArgs e)
+        {
+            _controler.MoveSelectedTaskUp();
+        }
+
+        /// <summary>
+        /// click on the button to move down selected task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnMoveDown_Click(object sender, EventArgs e)
+        {
+            _controler.MoveSelectedTaskDown();
         }
     }
 }
