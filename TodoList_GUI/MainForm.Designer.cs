@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnMoveTaskDown = new System.Windows.Forms.Button();
+            this.btnMoveTaskUp = new System.Windows.Forms.Button();
             this.listViewAllTasks = new System.Windows.Forms.ListView();
             this.contextMenuListOfTasks = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cxtMenuListOfTasksNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,6 +40,9 @@
             this.cxtMenuListOfTasksDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.cxtMenuListOfTasksMoveUp = new System.Windows.Forms.ToolStripMenuItem();
             this.cxtMenuListOfTasksMoveDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnNewTask = new System.Windows.Forms.Button();
+            this.btnEditTask = new System.Windows.Forms.Button();
+            this.btnDeleteTask = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.currentTaskTreeView = new System.Windows.Forms.TreeView();
             this.contextMenuCurrentTask = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -52,12 +57,8 @@
             this.contextMenuNotify = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnNewTask = new System.Windows.Forms.Button();
-            this.btnEditTask = new System.Windows.Forms.Button();
-            this.btnDeleteTask = new System.Windows.Forms.Button();
             this.checkHideCompletedSubtasks = new System.Windows.Forms.CheckBox();
-            this.btnMoveTaskUp = new System.Windows.Forms.Button();
-            this.btnMoveTaskDown = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -96,6 +97,34 @@
             this.splitContainer1.SplitterDistance = 271;
             this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // btnMoveTaskDown
+            // 
+            this.btnMoveTaskDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveTaskDown.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMoveTaskDown.BackgroundImage")));
+            this.btnMoveTaskDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnMoveTaskDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMoveTaskDown.Location = new System.Drawing.Point(238, 37);
+            this.btnMoveTaskDown.Name = "btnMoveTaskDown";
+            this.btnMoveTaskDown.Size = new System.Drawing.Size(28, 28);
+            this.btnMoveTaskDown.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.btnMoveTaskDown, "Move selected task down");
+            this.btnMoveTaskDown.UseVisualStyleBackColor = true;
+            this.btnMoveTaskDown.Click += new System.EventHandler(this.btnMoveDown_Click);
+            // 
+            // btnMoveTaskUp
+            // 
+            this.btnMoveTaskUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveTaskUp.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMoveTaskUp.BackgroundImage")));
+            this.btnMoveTaskUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnMoveTaskUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMoveTaskUp.Location = new System.Drawing.Point(238, 3);
+            this.btnMoveTaskUp.Name = "btnMoveTaskUp";
+            this.btnMoveTaskUp.Size = new System.Drawing.Size(28, 28);
+            this.btnMoveTaskUp.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.btnMoveTaskUp, "Move selected task up");
+            this.btnMoveTaskUp.UseVisualStyleBackColor = true;
+            this.btnMoveTaskUp.Click += new System.EventHandler(this.btnMoveUp_Click);
             // 
             // listViewAllTasks
             // 
@@ -159,6 +188,48 @@
             this.cxtMenuListOfTasksMoveDown.Size = new System.Drawing.Size(211, 22);
             this.cxtMenuListOfTasksMoveDown.Text = "Move down (Ctrl + down)";
             this.cxtMenuListOfTasksMoveDown.Click += new System.EventHandler(this.cxtMenuListOfTasksMoveDown_Click);
+            // 
+            // btnNewTask
+            // 
+            this.btnNewTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNewTask.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnNewTask.BackgroundImage")));
+            this.btnNewTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnNewTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNewTask.Location = new System.Drawing.Point(238, 207);
+            this.btnNewTask.Name = "btnNewTask";
+            this.btnNewTask.Size = new System.Drawing.Size(28, 28);
+            this.btnNewTask.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.btnNewTask, "Create a new task");
+            this.btnNewTask.UseVisualStyleBackColor = true;
+            this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
+            // 
+            // btnEditTask
+            // 
+            this.btnEditTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditTask.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnEditTask.BackgroundImage")));
+            this.btnEditTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnEditTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditTask.Location = new System.Drawing.Point(238, 241);
+            this.btnEditTask.Name = "btnEditTask";
+            this.btnEditTask.Size = new System.Drawing.Size(28, 28);
+            this.btnEditTask.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.btnEditTask, "Edit the current task");
+            this.btnEditTask.UseVisualStyleBackColor = true;
+            this.btnEditTask.Click += new System.EventHandler(this.btnEditTask_Click);
+            // 
+            // btnDeleteTask
+            // 
+            this.btnDeleteTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteTask.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnDeleteTask.BackgroundImage")));
+            this.btnDeleteTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnDeleteTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteTask.Location = new System.Drawing.Point(238, 275);
+            this.btnDeleteTask.Name = "btnDeleteTask";
+            this.btnDeleteTask.Size = new System.Drawing.Size(28, 28);
+            this.btnDeleteTask.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.btnDeleteTask, "Delete the current task");
+            this.btnDeleteTask.UseVisualStyleBackColor = true;
+            this.btnDeleteTask.Click += new System.EventHandler(this.btnDeleteTask_Click);
             // 
             // splitContainer2
             // 
@@ -254,7 +325,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.descriptionTextBox.Location = new System.Drawing.Point(3, 3);
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(436, 89);
+            this.descriptionTextBox.Size = new System.Drawing.Size(436, 83);
             this.descriptionTextBox.TabIndex = 0;
             this.descriptionTextBox.Text = "";
             // 
@@ -287,45 +358,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // btnNewTask
-            // 
-            this.btnNewTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNewTask.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnNewTask.BackgroundImage")));
-            this.btnNewTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnNewTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNewTask.Location = new System.Drawing.Point(238, 207);
-            this.btnNewTask.Name = "btnNewTask";
-            this.btnNewTask.Size = new System.Drawing.Size(28, 28);
-            this.btnNewTask.TabIndex = 2;
-            this.btnNewTask.UseVisualStyleBackColor = true;
-            this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
-            // 
-            // btnEditTask
-            // 
-            this.btnEditTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditTask.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnEditTask.BackgroundImage")));
-            this.btnEditTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnEditTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditTask.Location = new System.Drawing.Point(238, 241);
-            this.btnEditTask.Name = "btnEditTask";
-            this.btnEditTask.Size = new System.Drawing.Size(28, 28);
-            this.btnEditTask.TabIndex = 2;
-            this.btnEditTask.UseVisualStyleBackColor = true;
-            this.btnEditTask.Click += new System.EventHandler(this.btnEditTask_Click);
-            // 
-            // btnDeleteTask
-            // 
-            this.btnDeleteTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteTask.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnDeleteTask.BackgroundImage")));
-            this.btnDeleteTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnDeleteTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteTask.Location = new System.Drawing.Point(238, 275);
-            this.btnDeleteTask.Name = "btnDeleteTask";
-            this.btnDeleteTask.Size = new System.Drawing.Size(28, 28);
-            this.btnDeleteTask.TabIndex = 2;
-            this.btnDeleteTask.UseVisualStyleBackColor = true;
-            this.btnDeleteTask.Click += new System.EventHandler(this.btnDeleteTask_Click);
-            // 
             // checkHideCompletedSubtasks
             // 
             this.checkHideCompletedSubtasks.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -335,34 +367,9 @@
             this.checkHideCompletedSubtasks.Size = new System.Drawing.Size(145, 17);
             this.checkHideCompletedSubtasks.TabIndex = 3;
             this.checkHideCompletedSubtasks.Text = "Hide completed subtasks";
+            this.toolTip1.SetToolTip(this.checkHideCompletedSubtasks, "Check this box if you want to hide completed subtasks.");
             this.checkHideCompletedSubtasks.UseVisualStyleBackColor = true;
             this.checkHideCompletedSubtasks.CheckedChanged += new System.EventHandler(this.checkHideCompletedSubtasks_CheckedChanged);
-            // 
-            // btnMoveTaskUp
-            // 
-            this.btnMoveTaskUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveTaskUp.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMoveTaskUp.BackgroundImage")));
-            this.btnMoveTaskUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnMoveTaskUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMoveTaskUp.Location = new System.Drawing.Point(238, 3);
-            this.btnMoveTaskUp.Name = "btnMoveTaskUp";
-            this.btnMoveTaskUp.Size = new System.Drawing.Size(28, 28);
-            this.btnMoveTaskUp.TabIndex = 3;
-            this.btnMoveTaskUp.UseVisualStyleBackColor = true;
-            this.btnMoveTaskUp.Click += new System.EventHandler(this.btnMoveUp_Click);
-            // 
-            // btnMoveTaskDown
-            // 
-            this.btnMoveTaskDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMoveTaskDown.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMoveTaskDown.BackgroundImage")));
-            this.btnMoveTaskDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnMoveTaskDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMoveTaskDown.Location = new System.Drawing.Point(238, 37);
-            this.btnMoveTaskDown.Name = "btnMoveTaskDown";
-            this.btnMoveTaskDown.Size = new System.Drawing.Size(28, 28);
-            this.btnMoveTaskDown.TabIndex = 3;
-            this.btnMoveTaskDown.UseVisualStyleBackColor = true;
-            this.btnMoveTaskDown.Click += new System.EventHandler(this.btnMoveDown_Click);
             // 
             // MainForm
             // 
@@ -425,5 +432,6 @@
         private System.Windows.Forms.ToolStripMenuItem cxtMenuListOfTasksMoveDown;
         private System.Windows.Forms.Button btnMoveTaskDown;
         private System.Windows.Forms.Button btnMoveTaskUp;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

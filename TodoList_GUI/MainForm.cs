@@ -242,6 +242,7 @@ namespace TodoList_GUI
         {
             TreeNode result = new TreeNode(task.Name);
             result.Tag = task;
+            result.ToolTipText = task.Description;
             FormatSubtaskItem(result, task);
             foreach (TaskToDo subtask in task.Subtasks)
             {
